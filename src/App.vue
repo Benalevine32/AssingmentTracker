@@ -10,6 +10,7 @@
 <script>
 import myModal from './components/myModal.vue';
 
+
 export default {
   name: 'App',
   components: {
