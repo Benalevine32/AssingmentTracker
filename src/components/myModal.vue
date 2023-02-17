@@ -62,7 +62,7 @@ export default {
 .modal {
   width: 50%;
   height: 50%;
-  background: #ffffff;
+  background: #252422;
   box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
   display: flex;
@@ -72,7 +72,7 @@ export default {
 .modal-header {
   position: relative;
   border-bottom: 1px solid #eeeeee;
-  color: #4aae9b;
+  color: #E6E6E6;
   font-size: 25px;
   justify-content: center;
   display: flex;
@@ -96,7 +96,7 @@ export default {
   padding: 10px;
   cursor: pointer;
   font-weight: bold;
-  color: #4aae9b;
+  color: #E6E6E6;
   background: transparent;
 }
 </style>

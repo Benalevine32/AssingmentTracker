@@ -16,7 +16,6 @@
         </div>
 
         <button type="button" class="editbtn" @click="editAssignment">
-            Edit
         </button>
     </div>
 </template>
@@ -41,15 +40,20 @@ export default{
 
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap');
+
 .AssignmentBox{
+    -webkit-box-shadow: 3px 15px 30px -1px rgba(0,0,0,0.57); 
+box-shadow: 3px 15px 30px -1px rgba(0,0,0,0.57);
+    color: #FFFCF2;
+    font-family: Roboto;
     position: relative;
     width: 75%;
     height: 175px;
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    background: #4589EF;
-    border: 3px solid #4589EF;
+    background: #403D39;
     border-radius: 20px;
 
     
@@ -73,22 +77,21 @@ export default{
     font-size: 14px;
     line-height: 17px;
 
-    color: #000000;
+    color: #E6E6E6;
 }
 
 .editbtn{
-    box-sizing: border-box;
+    background-image: url(https://www.svgrepo.com/show/505639/edit-4.svg);
+    background-size: 100%;
+    width: 60px;
+    height: 60px;
 
-    width: 67px;
-    height: 30px;
-
-    background: #5DFA6C;
     border: 1px solid #000000;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     position: absolute;
-    right: 0;
-    top: 40%;
+    right: 10px;
+    top: 30%;
 }
 .diffTime{
     position: relative;
