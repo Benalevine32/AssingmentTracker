@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap');
+
+.bg{
+  padding: 60px 0;
+  height: 600px;
+  background: #252422;
+
+}
+.AssignmentBox{
+    -webkit-box-shadow: 3px 15px 30px -1px rgba(0,0,0,0.57); 
+box-shadow: 3px 15px 30px -1px rgba(0,0,0,0.57);
+    color: #FFFCF2;
+    font-family: Roboto;
+    
+    position: relative;
+    width: 75%;
+    height: 175px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    background: #403D39;
+    border-radius: 20px;
+    
+}
+.Title{
+    position: relative;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 29px;
+    top: 10px;
+    left: 24px;
+    
+}
+.Description{
+    width: 400px;
+    position: relative;
+    overflow-wrap: break-word;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 17px;
+    top: 50px;
+    left: 0px;
+}
+.editbtn{
+    background-image: url(https://www.svgrepo.com/show/505639/edit-4.svg);
+    background-size: 100%;
+    font-family: Roboto;
+    font-weight: 700;
+    box-sizing: border-box;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    position: relative;
+    top: 33%;
+    right: 10px;
+}
+.diffTime{
+    position: relative;
+    margin: auto;
+    font-weight: 800;
+  
+
+}
+.Time{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-top: 35px;
+    
+}
+
+#timePGB{
+  postion: relative;
+  margin: 20px;
+  width: 400px;
+  height: 8px;
+}
