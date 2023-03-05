@@ -2,9 +2,7 @@
       <div class="sortPop">
           <div class="sortPop-inner">
             <div class="exitButton">
-                <button id="Exit" 
-                  @click="$emit('close')"> X 
-                </button>
+              <button @click="TogglePopUp">X</button>
             </div>
               <h1 id="SortHead"> Sort Tasks</h1>
               <div class="sortingMeths">
@@ -41,6 +39,7 @@
 
   <script>
   export default {
+    props: ['TogglePopUp'],
     data() {
       return {
         showPrioDropdown: false,
@@ -73,12 +72,7 @@
       toggleClassDropdown() {
         this.showClassDropdown = !this.showClassDropdown;
       },
-      showSPop() {
-       this.isModalVisible = true;
-     },
-     closeSPop() {
-       this.isModalVisible = false;
-    },
+      
   },
     watch: {
     selectAllClasses: function(value) {
@@ -96,11 +90,11 @@
       if (value) {
         // Set all checkboxes to selected
         this.selectedPriorities = ["Difficulty", "Due Date", "Time"];
-        this.selectAllPrio = true; // select all classes
+        this.selectAllPrio = true; // select all priorities
       } else {
         // Set all checkboxes to unselected
         this.selectedPriorities = [];
-        this.selectAllPrio = false; // unselect all classes
+        this.selectAllPrio = false; // unselect all priorities
       }
     }
   }
