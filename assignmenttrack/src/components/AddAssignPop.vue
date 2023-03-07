@@ -1,0 +1,112 @@
+<template>
+    <div class="sortPop">
+        <div class="sortPop-inner">
+            <div class="exitButton">
+                <button @click="TogglePopUp">X</button>
+            </div>
+            <div class="Title">
+                <b>Add Assignment</b>
+            </div>
+            <div class="InputList">
+                <div class="IndInp">
+                    <label for="Name">Assignment Name:</label><br>
+                    <input type="text" id="Name" name="Name"><br>
+                </div>
+                <div class="IndInp">
+                    <label for="Class">Class:</label><br>
+                    <input type="text" id="Class" name="Class"><br>
+                </div>
+                <div class="IndInp">
+                    <label for="Time">Time:</label><br>
+                    <input type="text" id="Time" name="Time"><br>
+                </div>
+                <div class="IndInp">
+                    <label for="Difficulty">Difficulty:</label><br>
+                    <select name="cars" id="cars">
+                      <option value="1">Very Easy</option>
+                      <option value="2">Easy</option>
+                      <option value="3">Medium</option>
+                      <option value="4">Hard</option>
+                      <option value="5">Very Hard</option>
+                    </select>                
+                  </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+
+</script>
+
+<style>
+.sortPop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color: rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .sortPop-inner{
+    position: fixed;
+    background-color: rgb(49, 49, 49);
+    color: rgb(3, 0, 0);
+    padding: 16px;
+    width: 60%;
+    height: 60%;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: white;
+  }
+  .exitButton{
+    text-align: right;
+  }
+  .Title{
+    margin-left: auto;
+    margin-right: auto;
+    align-content: center;
+    font-size: 30px;
+  }
+  .IndInp label{
+    padding-left: 10%;
+    text-align: left;
+  }
+  .InputList input {
+    position: static;
+    text-align: center;
+    justify-content: center;
+  }
+  .IndInp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 40px;
+  }
+
+  .IndInp label {
+    flex: 1;
+    text-align: right;
+    margin-right: 15px;
+    font-size: 15px;
+  }
+
+  .IndInp input {
+    flex: 2;
+    align-items: center;
+    text-align: left;
+    width: calc(70% - 10px); /* add this line to set the width */
+  }
+  .IndInp select {
+    flex: 2;
+    text-align: left;
+    width: calc(70% - 10px); /* add this line to set the width */
+  }
+</style>

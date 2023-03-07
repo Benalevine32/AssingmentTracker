@@ -12,7 +12,7 @@ import sortPop from './components/PopSort.vue'
 export default {
   name: "app",
   components: {
-    sortPop
+    sortPop,
   },
   setup() {
     const popupTrigger = ref({

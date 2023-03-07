@@ -123,7 +123,7 @@
       color: rgb(3, 0, 0);
       padding: 16px;
       width: 40%;
-      height: 25%;
+      height: 40%;
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
       text-align: center;
   }
