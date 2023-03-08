@@ -2,7 +2,7 @@
     <div class="sortPop">
         <div class="sortPop-inner">
             <div class="exitButton">
-                <button @click="TogglePopUp">X</button>
+                <button  @click="close">X</button>
             </div>
             <div class="Title">
                 <b>Add Assignment</b>
@@ -36,7 +36,13 @@
 </template>
 
 <script>
-
+  export default{
+    methods:{
+      close() {
+        this.$emit("close");
+      },
+    }
+  }
 </script>
 
 <style>
@@ -78,6 +84,9 @@
   .IndInp label{
     padding-left: 10%;
     text-align: left;
+  }
+  .InputList {
+    margin-top: 5%;
   }
   .InputList input {
     position: static;

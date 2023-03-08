@@ -1,34 +1,16 @@
 <template>
   <div id="app">
-    <h1>Vue Popups</h1>
-    <button @click="() => TogglePopUp('buttonTrigger')">Open Popups</button>
-    <sortPop v-if="popupTrigger.buttonTrigger" :TogglePopUp="() => TogglePopUp('buttonTrigger')"/>
+    <MainPage />
   </div>
 </template>
 
 <script>
-import {ref} from 'vue'
-import sortPop from './components/PopSort.vue'
+import MainPage from './components/MainPage.vue';
 export default {
   name: "app",
   components: {
-    sortPop,
+    MainPage
   },
-  setup() {
-    const popupTrigger = ref({
-      buttonTrigger: false,
-      timedTrigger: false
-    })
-
-    const TogglePopUp = (trigger) => {
-      popupTrigger.value[trigger] = !popupTrigger.value[trigger]
-    }
-    return {
-      sortPop,
-      popupTrigger,
-      TogglePopUp
-    }
-  }
    
 };
 </script>

@@ -2,7 +2,7 @@
       <div class="sortPop">
           <div class="sortPop-inner">
             <div class="exitButton">
-              <button @click="TogglePopUp">X</button>
+              <button @click="close">X</button>
             </div>
               <h1 id="SortHead"> Sort Tasks</h1>
               <div class="sortingMeths">
@@ -72,29 +72,32 @@
       toggleClassDropdown() {
         this.showClassDropdown = !this.showClassDropdown;
       },
+      close() {
+        this.$emit("close");
+      },
       
   },
     watch: {
     selectAllClasses: function(value) {
       if (value) {
-        // Set all checkboxes to selected
+
         this.selectedClasses = this.options.map(option => option.value);
-        this.selectAllClasses = true; // select all priorities
+        this.selectAllClasses = true; 
       } else {
-        // Set all checkboxes to unselected
+        
         this.selectedClasses = [];
-        this.selectAllClasses = false; // unselect all priorities
+        this.selectAllClasses = false; 
       }
     },
     selectAllPrio: function(value) {
       if (value) {
-        // Set all checkboxes to selected
+        
         this.selectedPriorities = ["Difficulty", "Due Date", "Time"];
-        this.selectAllPrio = true; // select all priorities
+        this.selectAllPrio = true; 
       } else {
-        // Set all checkboxes to unselected
+        
         this.selectedPriorities = [];
-        this.selectAllPrio = false; // unselect all priorities
+        this.selectAllPrio = false; 
       }
     }
   }
