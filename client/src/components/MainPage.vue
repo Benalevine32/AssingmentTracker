@@ -11,34 +11,24 @@
           {{ sidePanelButton }}
         </button>
         <div id="task-row-1">
-          <div class="task" id="taskRow1">
-            <div id="main-task-title">MAIN TASK TITLE</div>
-            <div id="time-estimate">Time Estimate: 01h 30m</div>
+          <div 
+            v-for="assignment in assignments"
+            :key="assignment.title"
+            class="task" 
+            id="taskRow1"
+          >
+            <div id="main-task-title">
+              {{ assignment.title }}
+            </div>
+            <div id="time-estimate">
+              Time Estimate: {{ assignment.timeEstimate }}
+            </div>
             <div id="total-difficulty">
               <div id="difficulty-estimate"></div>
             </div>
           </div>
-
-          <div class="task">
-            <div id="main-task-title">MAIN TASK TITLE</div>
-            <div id="time-estimate">Time Estimate: 3h 00m</div>
-            <div id="total-difficulty">
-              <div id="difficulty-estimate"></div>
-            </div>
-          </div>
+          <button id="addAssignment">+</button>
         </div>
-
-        <div id="task-row-2">
-          <div class="task" id="taskRow2">
-            <div id="main-task-title">MAIN TASK TITLE</div>
-            <div id="time-estimate">Time Estimate: 0h 45m</div>
-            <div id="total-difficulty">
-              <div id="difficulty-estimate"></div>
-            </div>
-          </div>
-        </div>
-
-        <button id="addAssignment">+</button>
       </div>
     </div>
   </body>
@@ -47,14 +37,31 @@
 <script>
 export default {
   name: "MainPage",
-  data: function () {
+  data() {
     return {
       sidePanel: false,
       sidePanelButton: "Menu",
+      assignments: [
+        {
+          title: "Assignment 1",
+          timeEstimate: "1h 30m",
+          difficulty: "Easy",
+        },
+        {
+          title: "Assignment 2",
+          timeEstimate: "3h 00m",
+          difficulty: "Medium",
+        },
+        {
+          title: "Assignment 3",
+          timeEstimate: "0h 45m",
+          difficulty: "Hard",
+        },
+      ]
     };
   },
   methods: {
-    toggleDiv: function () {
+    toggleDiv() {
       this.sidePanel = !this.sidePanel;
       if (this.sidePanel) {
         this.sidePanelButton = "X";
