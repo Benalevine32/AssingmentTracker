@@ -1,12 +1,16 @@
 <template>
   <body>
+
     <div id="bg">
       <div v-if="sidePanel" id="sidePanel">
-        <button id="sortBy">Sort By...</button>
-        <button id="viewTasks">View All Tasks</button>
+        <button id="sortBy" @click="showSort()">Sort By...</button>
+        <button id="viewTasks" @click="showModal()">View All Tasks</button>
       </div>
 
       <div id="restOfScreen">
+        <myModal v-show="isModalVisible" @close="closeModal()"/>
+        <PopSort v-show="isSortVisible" @close="closeSort()"/>
+        <AddAssignPop v-show="isAddVisible" @close="closeAdd()" />
         <button id="menu" v-on:click="toggleDiv()">
           {{ sidePanelButton }}
         </button>
@@ -27,18 +31,32 @@
               <div id="difficulty-estimate"></div>
             </div>
           </div>
-          <button id="addAssignment">+</button>
+          <button id="addAssignment" @click="showAdd()">+</button>
         </div>
       </div>
     </div>
   </body>
 </template>
 
+
+
+
 <script>
+import myModal from './myModal.vue';
+import PopSort from './PopSort.vue';
+import AddAssignPop from './AddAssignPop.vue';
 export default {
   name: "MainPage",
+  components: {
+    myModal,
+    PopSort,
+    AddAssignPop,
+  },
   data() {
     return {
+      isAddVisible: false,
+      isSortVisible: false,
+      isModalVisible: false,
       sidePanel: false,
       sidePanelButton: "Menu",
       assignments: [
@@ -61,6 +79,24 @@ export default {
     };
   },
   methods: {
+    showAdd(){
+      this.isAddVisible = true;
+    },
+    closeAdd(){
+      this.isAddVisible = false;
+    },
+    showSort(){
+      this.isSortVisible = true;
+    },
+    closeSort(){
+      this.isSortVisible = false;
+    },
+    showModal() {
+        this.isModalVisible = true;
+      },
+    closeModal() {
+        this.isModalVisible = false;
+      },
     toggleDiv() {
       this.sidePanel = !this.sidePanel;
       if (this.sidePanel) {
@@ -181,10 +217,9 @@ body {
 }
 
 #taskRow1 {
-  margin-top: 90px;
+  margin-top: 5px;
   margin-left: 40%;
   margin-right: 10px;
-  margin-bottom: 0;
   height: 1fr;
 }
 
