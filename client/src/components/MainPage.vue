@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 
     <body>
         <div id="bg">
@@ -16,6 +17,25 @@
             <button id="menu" v-on:click="toggleDiv()">
                     {{ sidePanelButton }}
             </button>
+=======
+    <body>
+        <div id="bg">
+            <div id="sidePanel">
+                <button id="menu">
+                    X
+                </button>
+                <div id="sideButtons">
+                    <button id="sortBy">
+                        Sort By...
+                    </button>
+                    <button id="viewTasks">
+                        View All Tasks
+                    </button>
+            </div>
+        </div>
+    
+        <div id="restOfScreen">
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
             <div id="task-row-1">
                     <div class="task" id="taskRow1">
                         <div id="main-task-title">
@@ -73,6 +93,7 @@
         </div>
     </body>
         
+<<<<<<< HEAD
 </template>
 
 <script>
@@ -177,17 +198,92 @@ export default{
 
             backdrop-filter: blur(5px); background-color: rgba(255, 252, 242, 0.8); border-radius: 29px; box-shadow: -10px 10px 40px 0px rgba(0, 0, 0, 1), inset 5px -5px 16px 0px rgb(138, 136, 131), inset 0px 11px 28px 0px rgb(255, 252, 242, 1);  
         }  
+=======
+    </template>
+    
+    <style>
+        body{
+            margin: 0;
+        }
+    
+        #bg{
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: red;
+            position: relative;
+        }
+    
+        #menu {
+            font-family: 'Eurostile Extended', sans-serif;
+            font-weight: 700;
+        }
+    
+        #sidePanel{
+            position: absolute;
+            width: 20%;
+            height: 100%;
+            background-color: #403D39;
+        }
+    
+        #sideButtons{
+            width: 100%;
+            height: 20%;
+            background-color: #403D39;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    
+        #restOfScreen{
+            width: 1fr;
+            height: 100%;
+            background-color: #CCC5B9;
+            /* position: absolute; */
+            right: 0px;
+            top: 0px;
+        }
+    
+        #sortBy,
+        #viewTasks{
+            width: 100px;
+            height: 100px;
+            background: #FFFCF2;
+            border-radius: 70px;
+            margin: 10px;
+            font-family: 'Eurostile Extended', sans-serif;
+            font-weight: 700;
+        }
+    
+        #menu{
+            width: 50px;
+            height: 50px;
+            background: #FFFCF2;
+            border-radius: 70px;
+            margin: 10px;
+            top: 0px;
+        }
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
     
         .task{
             position: relative;
             width: 200px;
             height: 190px;
     
+<<<<<<< HEAD
             margin-top: 10px; 
     
             display: inline-block;
             backdrop-filter: blur(5px); background-color: rgba(253, 253,96); border-radius: 29px; box-shadow: -10px 10px 40px 0px rgb(161, 161, 161, 0.8), inset 5px -5px 16px 0px rgba(253, 253,96), inset 0px 11px 28px 0px rgb(255, 255, 255, 0.7);  
             
+=======
+            margin-top: 10px;
+    
+            background: #ECC22E;    
+    
+            display: inline-block;
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
         }
     
         #taskRow1{
@@ -196,7 +292,10 @@ export default{
             margin-right: 10px;
             margin-bottom: 0;
             height: 1fr;
+<<<<<<< HEAD
             
+=======
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
         }
     
         #taskRow2{
@@ -213,15 +312,25 @@ export default{
             top: 5%;
             text-align: center;
             vertical-align: middle;
+<<<<<<< HEAD
             font-family: 'Nunito', sans-serif;
             font-style: normal;
             font-weight: bolder;
+=======
+            font-family: 'Eurostile Extended', sans-serif;
+            font-style: normal;
+            font-weight: 800;
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
             font-size: 24px;
             line-height: 29px;
             left: 10px;
     
     
+<<<<<<< HEAD
             color: #252422;
+=======
+            color: #000000;
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
         }
     
         #time-estimate{
@@ -232,14 +341,24 @@ export default{
             top: 40%;
             text-align: center;
             vertical-align: text-bottom; 
+<<<<<<< HEAD
             font-family: 'Nunito', sans-serif;
             font-style: normal;
             font-weight: 100;
+=======
+            font-family: 'Eurostile Extended', sans-serif;
+            font-style: normal;
+            font-weight: 700;
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
             font-size: 20px;
             line-height: 24px;
             left: 20px;
     
+<<<<<<< HEAD
             color: #252422;
+=======
+            color: #FFFFFF;
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
         }
     
         #total-difficulty{
@@ -261,11 +380,16 @@ export default{
         }
     
         #addAssignment{
+<<<<<<< HEAD
             width: 95px;
+=======
+            width: 97px;
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
             height: 95px;
     
             position: absolute;
             
+<<<<<<< HEAD
             backdrop-filter: blur(5px); background-color: rgba(93, 250, 108, 1); border-radius: 29px; box-shadow: -10px 10px 40px 0px rgb(161, 161, 161, 0.8), inset 5px -5px 16px 0px rgba(93, 250, 108, 1), inset 0px 11px 28px 0px rgb(255, 255, 255, 0.7);  
             border: none;
             cursor: pointer;
@@ -281,5 +405,18 @@ export default{
             justify-content: center;
             align-items: center;
 
+=======
+            background: #5DFA6C;
+            border: 4px solid #5DFA6C;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            margin: 20px;
+            bottom: 0px;
+            right: 0px;
+    
+            font-family: 'Eurostile Extended', sans-serif;
+            font-weight: 700;
+            font-size: 70px;
+>>>>>>> 7601985878d3fb8f8d0d5074fc77d0affeae6e1a
         }   
     </style>
