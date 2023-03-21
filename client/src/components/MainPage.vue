@@ -22,7 +22,11 @@
                             {{ assignmentsList[0].description }}
                         </div>
                         <div id="time-estimate">
+<<<<<<< HEAD
                             {{ assignmentsList[0].dueDate | formatDate }}
+=======
+                           {{ assignmentsList[0].dueDate | formatDate}}
+>>>>>>> 84690287044bcb95ef9c7d2efdc6bb4282d9fffd
                         </div>
                         <div id="total-difficulty">
                             <div id="difficulty-estimate">
@@ -36,7 +40,11 @@
                             {{ assignmentsList[1].description }}
                         </div>
                         <div id="time-estimate">
+<<<<<<< HEAD
                             {{ assignmentsList[1].dueDate | formatDate }}
+=======
+                            {{ assignmentsList[1].dueDate | formatDate}}
+>>>>>>> 84690287044bcb95ef9c7d2efdc6bb4282d9fffd
                         </div>
                         <div id="total-difficulty">
                             <div id="difficulty-estimate">
@@ -49,10 +57,18 @@
                 <div id="task-row-2">
                     <div class="task" id="taskRow2">
                         <div id="main-task-title">
+<<<<<<< HEAD
                             {{ assignmentsList[5].description }}
                         </div>
                     <div id="time-estimate">
                         {{ assignmentsList[5].dueDate | formatDate }}
+=======
+                            {{ assignmentsList[2].description }}
+                        </div>  
+
+                    <div id="time-estimate">
+                        {{ assignmentsList[2].dueDate | formatDate}}
+>>>>>>> 84690287044bcb95ef9c7d2efdc6bb4282d9fffd
                     </div>
                     <div id="total-difficulty">
                         <div id="difficulty-estimate">
@@ -70,6 +86,7 @@
         </div>
     </body>
         
+<<<<<<< HEAD
     </template>
     <script>
 
@@ -111,6 +128,43 @@
     }
     
     </script>
+=======
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'DisplayAssignments',
+  filters: {
+    formatDate: function (value) {
+      const date = new Date(value);
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    }
+  },
+  data() {
+    return {
+      classesList: [],
+      assignmentsList: [],
+    };
+  },
+  mounted() {
+    axios.get('http://localhost:3001/api/classes')
+      .then((response) => {
+        this.classesList = response.data;
+        return axios.get('http://localhost:3001/api/assignments')
+      })
+      .then(response=>{
+        this.assignmentsList = response.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  },
+};
+</script>
+>>>>>>> 84690287044bcb95ef9c7d2efdc6bb4282d9fffd
     
     <style>
         body{
