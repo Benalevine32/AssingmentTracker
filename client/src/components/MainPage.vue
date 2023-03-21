@@ -19,11 +19,10 @@
             <div id="task-row-1">
                     <div class="task" id="taskRow1">
                         <div id="main-task-title">
-                            MAIN TASK TITLE
+                            {{ assignmentsList[0].description }}
                         </div>
                         <div id="time-estimate">
-                            Time Estimate:
-                            01h 30m
+                            {{ assignmentsList[0].dueDate | formatDate }}
                         </div>
                         <div id="total-difficulty">
                             <div id="difficulty-estimate">
@@ -34,11 +33,10 @@
                 
                     <div class="task">
                         <div id="main-task-title">
-                            MAIN TASK TITLE
+                            {{ assignmentsList[1].description }}
                         </div>
                         <div id="time-estimate">
-                            Time Estimate:
-                            3h 00m
+                            {{ assignmentsList[1].dueDate | formatDate }}
                         </div>
                         <div id="total-difficulty">
                             <div id="difficulty-estimate">
@@ -51,11 +49,10 @@
                 <div id="task-row-2">
                     <div class="task" id="taskRow2">
                         <div id="main-task-title">
-                            MAIN TASK TITLE
+                            {{ assignmentsList[5].description }}
                         </div>
                     <div id="time-estimate">
-                            Time Estimate:
-                            0h 45m
+                        {{ assignmentsList[5].dueDate | formatDate }}
                     </div>
                     <div id="total-difficulty">
                         <div id="difficulty-estimate">
@@ -74,6 +71,46 @@
     </body>
         
     </template>
+    <script>
+
+    import axios from 'axios';
+
+
+    export default
+    {
+        name: 'dispayClasses',
+        data(){
+            return{
+                classesList: [],
+                assignmentsList: [],
+            };
+        },
+        filters:{
+            formatDate(value){
+                const date = new Date(value);
+                return date.toLocaleDateString();
+            }
+        },
+        mounted()
+        {
+            axios.get('http://localhost:3001/api/classes')
+            .then((response)=>{
+                this.classesList = response.data;
+            })    
+            .catch((error)=>{
+                console.error(error);
+            });
+            axios.get('http://localhost:3001/api/assignments')
+            .then((response)=>{
+                this.assignmentsList = response.data;
+            })
+            .catch((error)=>{
+                console.error(error);
+            })
+        },
+    }
+    
+    </script>
     
     <style>
         body{
