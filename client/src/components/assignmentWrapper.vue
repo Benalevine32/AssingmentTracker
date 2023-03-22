@@ -1,0 +1,101 @@
+<template>
+    <div class="AssignmentBox">
+        <div class="Title">
+            {{ title }}
+            <div class="Description">
+                {{ description }}
+            </div>
+        </div>
+        <div class="diffTime">
+            <div class="Difficulty">
+                Difficulty: {{ difficulty }}
+            </div>
+            <div class="Time">
+                    Time: {{ time }}
+            </div>
+        </div>
+
+        <button type="button" class="editbtn" @click="editAssignment">
+        </button>
+    </div>
+</template>
+
+
+<script>
+
+export default{
+    name: "assignmentWrapper",
+    props:{
+        title: {required: true, type: String},
+        description: {required: true, type: String},
+        difficulty: {required: true, type: Number},
+        time: {required: true, type: Number},
+    },
+    methods:{
+        editAssignment(){
+        }
+    }
+}
+</script>
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap');
+.AssignmentBox{
+    -webkit-box-shadow: 3px 15px 30px -1px rgba(0,0,0,0.57); 
+box-shadow: 3px 15px 30px -1px rgba(0,0,0,0.57);
+    color: #FFFCF2;
+    font-family: Roboto;
+    position: relative;
+    width: 75%;
+    height: 175px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    background: #403D39;
+    border-radius: 20px;
+    
+}
+.Title{
+    position: relative;
+    width: 195px;
+    height: 40px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 29px;
+    color: #E6E6E6;
+}
+.Description{
+    position: relative;
+    align-content: center;
+    overflow-wrap: break-word;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #E6E6E6;
+}
+.editbtn{
+    background-image: url(https://www.svgrepo.com/show/505639/edit-4.svg);
+    background-size: 100%;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    position: absolute;
+    right: 10px;
+    top: 30%;
+}
+.diffTime{
+    position: relative;
+    display: block;
+    margin: auto;
+}
+.Time{
+    position: relative;
+    margin-top: 20px;
+    display: inline-block;
+    flex-direction: column;
+    
+}
+</style>

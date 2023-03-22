@@ -2,7 +2,7 @@
       <div class="sortPop">
           <div class="sortPop-inner">
             <div class="exitButton">
-              <button @click="TogglePopUp">X</button>
+              <button @click="close">X</button>
             </div>
               <h1 id="SortHead"> Sort Tasks</h1>
               <div class="sortingMeths">
@@ -39,6 +39,7 @@
 
   <script>
   export default {
+    name: "PopSort",
     props: ['TogglePopUp'],
     data() {
       return {
@@ -51,11 +52,11 @@
         },
         {
           text: 'Class 2',
-          value: 'dos'
+          value: 2
         },
         {
           text: 'Class 3',
-          value: 'Tres'
+          value: 3
         }
         ],
         isSortPopVisible: false,
@@ -72,29 +73,32 @@
       toggleClassDropdown() {
         this.showClassDropdown = !this.showClassDropdown;
       },
+      close() {
+        this.$emit("close");
+      },
       
   },
     watch: {
     selectAllClasses: function(value) {
       if (value) {
-        // Set all checkboxes to selected
+
         this.selectedClasses = this.options.map(option => option.value);
-        this.selectAllClasses = true; // select all priorities
+        this.selectAllClasses = true; 
       } else {
-        // Set all checkboxes to unselected
+        
         this.selectedClasses = [];
-        this.selectAllClasses = false; // unselect all priorities
+        this.selectAllClasses = false; 
       }
     },
     selectAllPrio: function(value) {
       if (value) {
-        // Set all checkboxes to selected
+        
         this.selectedPriorities = ["Difficulty", "Due Date", "Time"];
-        this.selectAllPrio = true; // select all priorities
+        this.selectAllPrio = true; 
       } else {
-        // Set all checkboxes to unselected
+        
         this.selectedPriorities = [];
-        this.selectAllPrio = false; // unselect all priorities
+        this.selectAllPrio = false; 
       }
     }
   }
@@ -122,8 +126,8 @@
       background-color: rgb(49, 49, 49);
       color: rgb(3, 0, 0);
       padding: 16px;
-      width: 40%;
-      height: 25%;
+      width: 30%;
+      height: 30%;
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
       text-align: center;
   }
