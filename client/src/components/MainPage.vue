@@ -19,10 +19,10 @@
             <div id="task-row-1">
                     <div class="task" id="taskRow1">
                         <div id="main-task-title">
-                            {{ assignmentsList[0].description }}
+                            {{ top3AssignmentsList[0].description }}
                         </div>
                         <div id="time-estimate">
-                           {{ assignmentsList[0].dueDate | formatDate}}
+                           {{ top3AssignmentsList[0].dueDate | formatDate}}
                         </div>
                         <div id="total-difficulty">
                             <div id="difficulty-estimate">
@@ -33,10 +33,10 @@
                 
                     <div class="task">
                         <div id="main-task-title">
-                            {{ assignmentsList[1].description }}
+                            {{ top3AssignmentsList[1].description }}
                         </div>
                         <div id="time-estimate">
-                             {{ assignmentsList[1].dueDate | formatDate}}
+                             {{ top3AssignmentsList[1].dueDate | formatDate}}
                         </div>
                         <div id="total-difficulty">
                             <div id="difficulty-estimate">
@@ -49,11 +49,11 @@
                 <div id="task-row-2">
                     <div class="task" id="taskRow2">
                         <div id="main-task-title">
-                            {{ assignmentsList[2].description }}
+                            {{ top3AssignmentsList[2].description }}
                         </div>  
 
                     <div id="time-estimate">
-                        {{ assignmentsList[2].dueDate | formatDate}}
+                        {{ top3AssignmentsList[2].dueDate | formatDate}}
                     </div>
                     <div id="total-difficulty">
                         <div id="difficulty-estimate">
@@ -83,7 +83,7 @@
         data(){
             return{
                 classesList: [],
-                assignmentsList: [],
+                top3AssignmentsList: [],
             };
         },
         filters:{
@@ -101,9 +101,9 @@
             .catch((error)=>{
                 console.error(error);
             });
-            axios.get('http://localhost:3001/api/assignments')
+            axios.get('http://localhost:3001/api/top3Assignments')
             .then((response)=>{
-                this.assignmentsList = response.data;
+                this.top3AssignmentsList = response.data;
             })
             .catch((error)=>{
                 console.error(error);
