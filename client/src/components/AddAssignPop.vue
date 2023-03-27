@@ -26,7 +26,7 @@
                 </div>
                 <div class="IndInp">
                     <label for="DueDate">Due Date:</label><br>
-                    <input type="text" id="DueDate" name="DueDate"><br>
+                    <input type="date" id="DueDate" name="DueDate"><br>
                 </div>
                 <div class="IndInp">
                     <label for="Difficulty">Difficulty:</label><br>
