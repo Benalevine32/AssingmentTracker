@@ -4,13 +4,15 @@
     <div id="bg">
       <div v-if="sidePanel" id="sidePanel">
         <button id="sortBy" @click="showSort()">Sort By...</button>
-        <button id="viewTasks" @click="showModal()">View All Tasks</button>
+        <button id="viewTasks" @click="showModal()">View All Tasks</button>\
+        <button id="Classes" @click="showClasses()">Classes</button>
       </div>
 
       <div id="restOfScreen">
         <myModal v-show="isModalVisible" @close="closeModal()"/>
         <PopSort v-show="isSortVisible" @close="closeSort()"/>
         <AddAssignPop v-show="isAddVisible" @close="closeAdd()" />
+        <ClassManage v-show="isClassesVisible" @close="closeClass()"/>
         <button id="menu" v-on:click="toggleDiv()">
           {{ sidePanelButton }}
         </button>
@@ -42,6 +44,7 @@
 import myModal from './myModal.vue';
 import PopSort from './PopSort.vue';
 import AddAssignPop from './AddAssignPop.vue';
+import ClassManage from './ClassManage.vue';
 import axios from 'axios';
 export default {
   name: "MainPage",
@@ -49,12 +52,14 @@ export default {
     myModal,
     PopSort,
     AddAssignPop,
+    ClassManage
   },
   data() {
     return {
       isAddVisible: false,
       isSortVisible: false,
       isModalVisible: false,
+      isClassesVisible: false,
       sidePanel: false,
       sidePanelButton: "Menu",
       classesList: [],
@@ -91,18 +96,24 @@ export default {
     closeAdd(){
       this.isAddVisible = false;
     },
+    closeClass(){
+      this.isClassesVisible = false;
+    },
     showSort(){
       this.isSortVisible = true;
+    },
+    showClasses(){
+      this.isClassesVisible = true;
     },
     closeSort(){
       this.isSortVisible = false;
     },
     showModal() {
-        this.isModalVisible = true;
-      },
+      this.isModalVisible = true;
+    },
     closeModal() {
-        this.isModalVisible = false;
-      },
+      this.isModalVisible = false;
+    },
     toggleDiv() {
       this.sidePanel = !this.sidePanel;
       if (this.sidePanel) {
@@ -189,7 +200,8 @@ body {
 }
 
 #sortBy,
-#viewTasks {
+#viewTasks,
+#Classes {
   width: 200px;
   height: 50px;
   margin: 20px;
