@@ -2,10 +2,11 @@
   "name": "nodeserver",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "AWS_RDS.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node AWS_RDS.js"
+    "serve": "nodemon AWS_RDS.js",
+    "dev": "nodemon AWS_RDS.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mysql": "^2.18.1",
-    "mysql2": "^3.2.0"
+    "mysql2": "^3.2.0",
+    "nodemon": "^2.0.22"
   }
 }

@@ -122,6 +122,10 @@ export default {
         this.sidePanelButton = "Menu";
       }
     },
+    logout() {
+      localStorage.clear()
+      this.$router.push('/')
+    }
   },
 };
 </script>
