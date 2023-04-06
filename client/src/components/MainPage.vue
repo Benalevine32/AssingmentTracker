@@ -9,7 +9,7 @@
 
       <div id="restOfScreen">
         <myModal v-show="isModalVisible" @close="closeModal()"/>
-        <PopSort v-show="isSortVisible" @close="closeSort()"/>
+        <PopSort v-show="isSortVisible" :getSortedAssignments="getSortedAssignments" @close="closeSort"/>
         <AddAssignPop v-show="isAddVisible" @close="closeAdd()" />
         <button id="menu" v-on:click="toggleDiv()">
           {{ sidePanelButton }}
@@ -22,10 +22,9 @@
             id="taskRow1"
           >
             <div id="main-task-title">
-             <p>{{ item.description }}</p>
-             <p>{{ item.dueDate | formatDate }}</p>
-             <p>{{ item.difficulty }}</p>
-
+              <p>{{ item.description }}</p>
+              <p>{{ item.dueDate | formatDate }}</p>
+              <p>{{ item.difficulty }}</p>
             </div>
           </div>
           <button id="addAssignment" @click="showAdd()">+</button>
@@ -43,6 +42,7 @@ import myModal from './myModal.vue';
 import PopSort from './PopSort.vue';
 import AddAssignPop from './AddAssignPop.vue';
 import axios from 'axios';
+
 export default {
   name: "MainPage",
   components: {
@@ -58,51 +58,53 @@ export default {
       sidePanel: false,
       sidePanelButton: "Menu",
       classesList: [],
-      top3AssignmentsList: []
+      top3AssignmentsList: [],
+      top3AssignmentsByDateList: []
     };
   },
   filters:{
-            formatDate(value){
-                const date = new Date(value);
-                return date.toLocaleDateString();
-            }
-        },
-        mounted()
-        {
-            axios.get('http://localhost:3001/api/classes')
-            .then((response)=>{
-                this.classesList = response.data;
-            })    
-            .catch((error)=>{
-                console.error(error);
-            });
-            axios.get('http://localhost:3001/api/top3Assignments')
-            .then((response)=>{
-                this.top3AssignmentsList = response.data;
-            })
-            .catch((error)=>{
-                console.error(error);
-            })
-        },
+    formatDate(value){
+      const date = new Date(value);
+      return date.toLocaleDateString();
+    }
+  },
+  mounted() {
+    // // will pull the assignments by default. Currently does not work.
+    // axios.get('http://localhost:3001/api/assignments')
+    // .then((response)=>{
+    //   this.classesList = response.data;
+    // })    
+    // .catch((error)=>{
+    //   console.error(error);
+    // });
+
+    axios.get('http://localhost:3001/api/top3AssignmentsByDate')
+    .then((response) => {
+      this.top3AssignmentsList = response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  },
   methods: {
-    showAdd(){
+    showAdd() {
       this.isAddVisible = true;
     },
-    closeAdd(){
+    closeAdd() {
       this.isAddVisible = false;
     },
-    showSort(){
+    showSort() {
       this.isSortVisible = true;
     },
-    closeSort(){
+    closeSort() {
       this.isSortVisible = false;
     },
     showModal() {
-        this.isModalVisible = true;
-      },
+      this.isModalVisible = true;
+    },
     closeModal() {
-        this.isModalVisible = false;
-      },
+      this.isModalVisible = false;
+    },
     toggleDiv() {
       this.sidePanel = !this.sidePanel;
       if (this.sidePanel) {
@@ -111,7 +113,27 @@ export default {
         this.sidePanelButton = "Menu";
       }
     },
-  },
+    fetchTop3Assignments() {
+      axios.get('http://localhost:3001/api/top3Assignments')
+      .then((response)=>{
+        this.top3AssignmentsList = response.data;
+      })
+      .catch((error)=>{
+        console.error(error);
+      })
+    },
+    getSortedAssignments(sortBy, sortOrder) {
+      const url = `http://localhost:3001/api/assignments?sortBy=${sortBy}&sortOrder=${sortOrder}&limit=3`;
+
+      axios.get(url)
+        .then((response)=>{
+          this.top3AssignmentsList = response.data;
+        })
+        .catch((error)=>{
+          console.error(error);
+        });
+    }
+  }
 };
 </script>
 

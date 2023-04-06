@@ -31,6 +31,7 @@
                       </ul>
                   </div>
                 </div>
+                <button style="display: block" @click="onSubmit()">SUBMIT</button>
               </div>
           </div>
       </div>
@@ -40,7 +41,10 @@
   <script>
   export default {
     name: "PopSort",
-    props: ['TogglePopUp'],
+    props: {
+      TogglePopUp: Boolean,
+      getSortedAssignments: Function
+    },
     data() {
       return {
         showPrioDropdown: false,
@@ -76,7 +80,24 @@
       close() {
         this.$emit("close");
       },
-      
+      onSubmit() {
+        console.log("you pressed the submit button and here we are at the onSubmit button")
+        
+        // Determine the selected priorities
+        const selectedPrios = this.selectedPriorities.map(prio => {
+          if (prio === 'Due Date') {
+            return 'due_date';
+          } else if (prio === 'Difficulty') {
+            return 'difficulty';
+          } else if (prio === 'Time') {
+            return 'time';
+          }
+        }).filter(Boolean);
+
+        // Call the server-side function to get the sorted assignments
+        this.getSortedAssignments(selectedPrios, this.selectedClasses);
+        this.$emit('close');
+      }
   },
     watch: {
     selectAllClasses: function(value) {
