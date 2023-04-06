@@ -7,7 +7,7 @@
               <h1 id="SortHead"> Sort Tasks</h1>
               <div class="sortingMeths">
                   <div id="PrioList" class="PriorityDrop" tabindex="100" >
-                      <span class="anchor" @click="togglePrioDropdown">Select Priority</span>
+                    <span class="anchor" @click="togglePrioDropdown">Select Priority</span>
                       <ul class="PrioItems" v-show="showPrioDropdown">
                         <li><input type="checkbox" id="all" value="all" v-model="selectAllPrio">
                         <label for="all">All</label></li>
@@ -25,8 +25,8 @@
                             <label for="all-classes">All</label>
                         </li>
                         <li v-for="(option, index) in options" :key="index">
-                          <input type="checkbox" :id="index" :value="option.value" v-model="selectedClasses">
-                          <label :for="index">{{ option.text }}</label>
+                          <input type="checkbox" :id="index" :value="option.className" v-model="selectedClasses">
+                          <label :for="index">{{ option.className }}</label>
                         </li>
                       </ul>
                   </div>
@@ -38,6 +38,7 @@
   </template>
 
   <script>
+  import axios from 'axios'; 
   export default {
     name: "PopSort",
     props: ['TogglePopUp'],
@@ -45,26 +46,23 @@
       return {
         showPrioDropdown: false,
         showClassDropdown: false,
-        options: [
-        {
-          text: 'Class 1',
-          value: 1
-        },
-        {
-          text: 'Class 2',
-          value: 2
-        },
-        {
-          text: 'Class 3',
-          value: 3
-        }
-        ],
+        options: [],
         isSortPopVisible: false,
         selectedPriorities: [],
         selectedClasses: [],
-        selectAllClasses: false,
+        selectAllClasses: true,
         selectAllPrio: false
       };
+    },
+    mounted() {
+      axios.get('http://localhost:3001/api/classes')
+      .then((response)=>{
+        this.options = response.data;
+        this.selectedClasses = this.options.map(option => option.className);
+      })
+      .catch((error)=>{
+        console.error(error);
+      })
     },
     methods: {
       togglePrioDropdown() {
@@ -78,18 +76,19 @@
       },
       
   },
-    watch: {
-    selectAllClasses: function(value) {
-      if (value) {
-
-        this.selectedClasses = this.options.map(option => option.value);
-        this.selectAllClasses = true; 
-      } else {
-        
-        this.selectedClasses = [];
-        this.selectAllClasses = false; 
-      }
+    computed: {
+      checkLengths() {
+        return this.options.length === this.selectedClasses.length;
+      },
     },
+    watch: {
+      selectAllClasses: function(value) {
+        if (value) {
+          this.selectedClasses = this.options.map(option => option.className);
+        } else {
+          this.selectedClasses = [];
+        }
+      },
     selectAllPrio: function(value) {
       if (value) {
         
@@ -100,7 +99,17 @@
         this.selectedPriorities = [];
         this.selectAllPrio = false; 
       }
-    }
+    },
+    selectedClasses: {
+      handler() {
+        if (this.selectedClasses.length !== this.options.length && this.selectAllClasses) {
+          this.selectAllClasses = false;
+        } else if (this.selectedClasses.length === this.options.length && !this.selectAllClasses) {
+          this.selectAllClasses = true;
+        }
+      },
+      immediate: true,
+    },
   }
 }
   </script>
@@ -123,7 +132,7 @@
 
   .sortPop-inner{
       position: fixed;
-      background-color: rgb(49, 49, 49);
+      background-color:#403D39;
       color: rgb(3, 0, 0);
       padding: 16px;
       width: 30%;
@@ -138,12 +147,11 @@
     color: rgb(255, 255, 255);
     margin-left: auto;
     margin-right: auto;
-    align-content: center;
+    align-items: center;
   }
   .sortingMeths {
     display: flex;
     position: relative;
-    align-items: top;
     justify-content: center;
     left: 5px;
     right: 5px;
@@ -160,7 +168,8 @@
 
   .PriorityDrop .anchor {
     position: relative;
-    width: 100px;
+    width: 60%;
+    align-items: center;
     text-align: left;
     cursor: pointer;
     display: inline-block;
@@ -172,8 +181,8 @@
   .PriorityDrop .anchor:after {
     position: absolute;
     content: "";
-    border-left: 2px solid rgb(255, 255, 255);
-    border-top: 2px solid rgb(255, 255, 255);
+    border-left: 2px solid rgb(0, 0, 0);
+    border-top: 2px solid rgb(0, 0, 0);
     padding: 5px;
     right: 10px;
     top: 20%;
@@ -192,9 +201,11 @@
   .PriorityDrop ul.PrioItems {
     position: static;
     top: 100%;
+    width: 100%;
     list-style-type: none;
     margin: 0;
     padding: 0;
+    align-items: center;
     background-color: rgb(202, 202, 202);
     outline:1px solid black;
   }
