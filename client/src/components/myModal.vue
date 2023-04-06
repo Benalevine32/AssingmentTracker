@@ -8,10 +8,9 @@
         </header>
   
         <section class="modal-body">
-          <ul v-for="(asmt, index) in asmts" v-bind:key="index">
-            <assignmentWrapper :title="asmt.title" :description="asmt.description" :difficulty="asmt.difficulty" :time="asmt.time"/>
+          <ul v-for="(item, index) in allAssignments" v-bind:key="index">
+            <assignmentWrapper :description="item.description" :difficulty="item.difficulty" :dueDate="item.dueDate | formatDate" :className="item.className"/>
           </ul>
-          
         </section>
       </div>
     </div>
@@ -20,12 +19,9 @@
   
   <script>
   
+  import axios from 'axios';
   import assignmentWrapper from "./assignmentWrapper.vue";
-  const asmts = [
-    {title: "stack project", description: "create stack", difficulty: 4, time: 45},
-    {title: "CS 204", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", difficulty: 10, time: 60},
-    {title: "Exam 1", description: "study", difficulty: 5, time: 30}
-  ];
+
   export default {
     name: "myModal",
     components: {
@@ -33,9 +29,25 @@
     },
     data() {
       return {
-        asmts,
         isModalVisible: false,
+        allAssignments: [],
       };
+    },
+    filters:{
+            formatDate(value){
+                const date = new Date(value);
+                return date.toLocaleDateString();
+            }
+        },
+    mounted()
+    {
+        axios.get('http://localhost:3001/api/allAssignmentsWithClass')
+        .then((response)=>{
+          this.allAssignments = response.data
+        })
+        .catch((error)=>{
+                console.error(error);
+        });
     },
     methods: {
       close() {

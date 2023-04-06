@@ -1,17 +1,17 @@
 <template>
     <div class="AssignmentBox">
-        <div class="Title">
-            {{ title }}
-            <div class="Description">
-                {{ description }}
-            </div>
+        <div class="description">
+            {{ description }}
         </div>
         <div class="diffTime">
             <div class="Difficulty">
                 Difficulty: {{ difficulty }}
             </div>
-            <div class="Time">
-                    Time: {{ time }}
+            <div class="dueDate">
+                    Due Date: {{ dueDate }}
+            </div>
+            <div class = "className">
+                    Class : {{ className }}
             </div>
         </div>
 
@@ -23,13 +23,15 @@
 
 <script>
 
+
+
 export default{
     name: "assignmentWrapper",
     props:{
-        title: {required: true, type: String},
         description: {required: true, type: String},
         difficulty: {required: true, type: Number},
-        time: {required: true, type: Number},
+        dueDate: {required: true, type: Date},
+        className: {required: true, type: String},
     },
     methods:{
         editAssignment(){
