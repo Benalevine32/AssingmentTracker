@@ -5,7 +5,8 @@
         </div>
         <div class="diffTime">
             <div class="Difficulty">
-                Difficulty: {{ difficulty }}
+                difficulty:
+                <input type="text" :disabled="noEdit" v-model="diff">
             </div>
             <div class="dueDate">
                     Due Date: {{ dueDate }}
@@ -15,14 +16,14 @@
             </div>
         </div>
 
-        <button type="button" class="editbtn" @click="editAssignment">
+        <button type="button" class="editbtn" @click="editAssignment()">
         </button>
     </div>
 </template>
 
 
 <script>
-
+import axios from 'axios';
 
 
 export default{
@@ -33,10 +34,39 @@ export default{
         dueDate: {required: true, type: Date},
         className: {required: true, type: String},
     },
+    data(){
+        return{
+            noEdit: true,
+            desc: this.description,
+            diff: this.difficulty,
+            due: this.dueDate,
+        }
+    },
     methods:{
         editAssignment(){
+            if(this.noEdit){
+                this.noEdit = !this.noEdit;
+            }
+            else{
+                this.noEdit = !this.noEdit;
+
+                var diff = this.diff;
+                var desc = this.desc;
+                var due = this.due;
+                var assId = this.assignment_id;
+                axios.get('http://localhost:3001/api/edit/'+ assId + '/' + diff + '/' + desc + '/' + due ,  {
+                    headers: {
+                    "Content-type": "application/json",
+                    }
+                    }).then((res) => {
+                    console.log(res);
+                });
+                window.location.reload();
+            }
         }
-    }
+
+    },
+
 }
 </script>
 
@@ -87,6 +117,7 @@ box-shadow: 3px 15px 30px -1px rgba(0,0,0,0.57);
     position: absolute;
     right: 10px;
     top: 30%;
+    cursor: pointer;
 }
 .diffTime{
     position: relative;

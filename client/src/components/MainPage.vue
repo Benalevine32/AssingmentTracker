@@ -4,78 +4,32 @@
     <div id="bg">
       <div v-if="sidePanel" id="sidePanel">
         <button id="sortBy" @click="showSort()">Sort By...</button>
-        <button id="viewTasks" @click="showModal()">View All Tasks</button>
+        <button id="viewTasks" @click="showModal()">View All Tasks</button>\
+        <button id="Classes" @click="showClasses()">Classes</button>
       </div>
 
       <div id="restOfScreen">
         <myModal v-show="isModalVisible" @close="closeModal()"/>
         <PopSort v-show="isSortVisible" @close="closeSort()"/>
         <AddAssignPop v-show="isAddVisible" @close="closeAdd()" />
+        <ClassManage v-show="isClassesVisible" @close="closeClass()"/>
         <button id="menu" v-on:click="toggleDiv()">
           {{ sidePanelButton }}
         </button>
         
         <div id="task-row-1">
           <div 
-            v-for="assignment in assignments"
-            :key="assignment.title"
+            v-for="item in top3AssignmentsList"
+            :key="item.description"
             class="task" 
             id="taskRow1"
           >
             <div id="main-task-title">
-              {{ assignment.title }}
-            </div>
-        </div>
-    
-        <div id="restOfScreen">
-            <div id="task-row-1">
-                    <div class="task" id="taskRow1">
-                        <div id="main-task-title">
-                            {{ top3AssignmentsList[0].description }}
-                        </div>
-                        <div id="time-estimate">
-                           {{ top3AssignmentsList[0].dueDate | formatDate}}
-                        </div>
-                        <div id="total-difficulty">
-                            <div id="difficulty-estimate">
-                                
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="task">
-                        <div id="main-task-title">
-                            {{ top3AssignmentsList[1].description }}
-                        </div>
-                        <div id="time-estimate">
-                             {{ top3AssignmentsList[1].dueDate | formatDate}}
-                        </div>
-                        <div id="total-difficulty">
-                            <div id="difficulty-estimate">
-                                
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-    
-                <div id="task-row-2">
-                    <div class="task" id="taskRow2">
-                        <div id="main-task-title">
-                            {{ top3AssignmentsList[2].description }}
-                        </div>  
-
-                    <div id="time-estimate">
-                        {{ top3AssignmentsList[2].dueDate | formatDate}}
-                    </div>
-                    <div id="total-difficulty">
-                        <div id="difficulty-estimate">
-                            
-                        </div>
-                    </div>
-                </div>
+             <p>{{ item.description }}</p>
+             <p>{{ item.dueDate | formatDate }}</p>
+             <p>{{ item.difficulty }}</p>
 
             </div>
-
           </div>
           <button id="addAssignment" @click="showAdd()">+</button>
         </div>
@@ -93,18 +47,22 @@ import axios from 'axios'
 import myModal from './myModal.vue';
 import PopSort from './PopSort.vue';
 import AddAssignPop from './AddAssignPop.vue';
+import ClassManage from './ClassManage.vue';
+import axios from 'axios';
 export default {
   name: "MainPage",
   components: {
     myModal,
     PopSort,
     AddAssignPop,
+    ClassManage
   },
   data() {
     return {
       isAddVisible: false,
       isSortVisible: false,
       isModalVisible: false,
+      isClassesVisible: false,
       sidePanel: false,
       sidePanelButton: "Menu",
       classesList: [],
@@ -141,18 +99,24 @@ export default {
     closeAdd(){
       this.isAddVisible = false;
     },
+    closeClass(){
+      this.isClassesVisible = false;
+    },
     showSort(){
       this.isSortVisible = true;
+    },
+    showClasses(){
+      this.isClassesVisible = true;
     },
     closeSort(){
       this.isSortVisible = false;
     },
     showModal() {
-        this.isModalVisible = true;
-      },
+      this.isModalVisible = true;
+    },
     closeModal() {
-        this.isModalVisible = false;
-      },
+      this.isModalVisible = false;
+    },
     toggleDiv() {
       this.sidePanel = !this.sidePanel;
       if (this.sidePanel) {
@@ -161,6 +125,10 @@ export default {
         this.sidePanelButton = "Menu";
       }
     },
+    logout() {
+      localStorage.clear()
+      this.$router.push('/')
+    }
   },
 };
 </script>
@@ -239,7 +207,8 @@ body {
 }
 
 #sortBy,
-#viewTasks {
+#viewTasks,
+#Classes {
   width: 200px;
   height: 50px;
   margin: 20px;
@@ -366,3 +335,4 @@ body {
   align-items: center;
 }
 </style>
+
