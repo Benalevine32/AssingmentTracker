@@ -20,8 +20,19 @@
                       </select>
                 </div>
                 <div class="IndInp">
-                    <label for="Time">Estimated Time, Minutes:</label><br>
-                    <input type="text" id="Time" name="Time" v-model="estimatedTime"><br>
+                  <label for="Difficulty">Estimated Time:</label><br>
+                    <select name="Time" id="Time" v-model="estimatedTime">
+                      <option value="30">30 mins</option>
+                      <option value="60">1 hour</option>
+                      <option value="90">1.5 hours</option>
+                      <option value="120">2 hours</option>
+                      <option value="150">2.5 hours</option>
+                      <option value="180">3 hours</option>
+                      <option value="210">3.5 hours</option>
+                      <option value="240">4 hours</option>
+                      <option value="270">4.5 hours</option>
+                      <option value="300">5 hours</option>
+                    </select>
                 </div>
                 <div class="IndInp">
                     <label for="DueDate">Due Date:</label><br>
