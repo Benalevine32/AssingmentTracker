@@ -20,8 +20,8 @@
     </div>
   </div>
 </template>
-  
-  
+  <script>
+          
 <script>
 import assignmentWrapper from "./assignmentWrapper.vue";
 

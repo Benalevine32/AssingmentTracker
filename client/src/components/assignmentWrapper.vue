@@ -1,20 +1,18 @@
 <template>
     <div class="AssignmentBox">
-
-        <div class="Title">
-            {{ assignment_id }}
-            <div class="Description">
-                <input type="text" :disabled="noEdit" v-model="desc">
-            </div>
+        <div class="description">
+            {{ description }}
         </div>
         <div class="diffTime">
             <div class="Difficulty">
                 difficulty:
                 <input type="text" :disabled="noEdit" v-model="diff">
             </div>
-            <div class="Time">
-                due date:
-                <input type="text" :disabled="noEdit" v-model="due">
+            <div class="dueDate">
+                    Due Date: {{ dueDate }}
+            </div>
+            <div class = "className">
+                    Class : {{ className }}
             </div>
         </div>
 
@@ -25,16 +23,16 @@
 
 
 <script>
-
 import axios from 'axios';
+
 
 export default{
     name: "assignmentWrapper",
     props:{
-        assignment_id: {required: true, type: Number},
         description: {required: true, type: String},
         difficulty: {required: true, type: Number},
-        dueDate: {required: true, type: Number},
+        dueDate: {required: true, type: Date},
+        className: {required: true, type: String},
     },
     data(){
         return{
