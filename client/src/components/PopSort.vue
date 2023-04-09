@@ -11,9 +11,9 @@
                       <ul class="PrioItems" v-show="showPrioDropdown">
                         <li><input type="checkbox" id="all" value="all" v-model="selectAllPrio">
                         <label for="all">All</label></li>
-                          <li><input type="checkbox" value="Difficulty" v-model="selectedPriorities"/>Difficulty</li>
-                          <li><input type="checkbox" value="Due Date" v-model="selectedPriorities"/>Due Date</li>
-                          <li><input type="checkbox" value="Time" v-model="selectedPriorities"/>Time</li>
+                          <li><input type="checkbox" value="Difficulty" v-model="sortByDifficulty"/>Difficulty</li>
+                          <li><input type="checkbox" value="Due Date" v-model="sortByDueDate"/>Due Date</li>
+                          <li><input type="checkbox" value="Time" v-model="sortByTime"/>Time</li>
                       </ul>
                   </div>
                 <div id="ClassList" class="PriorityDrop" tabindex="100" >
@@ -39,6 +39,7 @@
   </template>
 
   <script>
+  import axios from 'axios';
   export default {
     name: "PopSort",
     props: {
@@ -49,6 +50,9 @@
       return {
         showPrioDropdown: false,
         showClassDropdown: false,
+        sortByDifficulty: false,
+        sortByDueDate: false,
+        sortByTime: false,
         options: [
         {
           text: 'Class 1',
@@ -80,9 +84,39 @@
       close() {
         this.$emit("close");
       },
+      sortedAssignments(selectedPrios, selectedClasses) {
+        if(selectedClasses.length == 0){
+          console.log("selectedClasses is empty")
+          // Make a GET request and use the class_id
+          axios.get('/api/assignments', {
+            params: {
+              class_id: selectedClasses
+            }
+          })
+          .then(response => {
+            // ouput to the console the data of the response  
+            console.log(response.data);
+          })
+          .catch(error => {
+            // ouput to the console any error that shows up
+            console.error(error);
+          });
+        }
+        else {
+          console.log("selectedClasses is NOT empty");
+          console.log(`attempting the sortedAssignments function with ${selectedClasses[0]}`);
+          
+          axios.get(`http://localhost:3001/api/top3AssignmentsByDifficulty/${selectedClasses[0]}`)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        }
+      },
+
       onSubmit() {
-        console.log("you pressed the submit button and here we are at the onSubmit button")
-        
         // Determine the selected priorities
         const selectedPrios = this.selectedPriorities.map(prio => {
           if (prio === 'Due Date') {
@@ -94,30 +128,27 @@
           }
         }).filter(Boolean);
 
-        // Call the server-side function to get the sorted assignments
-        this.getSortedAssignments(selectedPrios, this.selectedClasses);
+        // selectedPrios returns the priority.
+        // selectedClasses is an array
+        this.sortedAssignments(selectedPrios, this.selectedClasses);
         this.$emit('close');
       }
-  },
+    },
     watch: {
     selectAllClasses: function(value) {
       if (value) {
-
         this.selectedClasses = this.options.map(option => option.value);
         this.selectAllClasses = true; 
       } else {
-        
         this.selectedClasses = [];
         this.selectAllClasses = false; 
       }
     },
     selectAllPrio: function(value) {
       if (value) {
-        
         this.selectedPriorities = ["Difficulty", "Due Date", "Time"];
         this.selectAllPrio = true; 
       } else {
-        
         this.selectedPriorities = [];
         this.selectAllPrio = false; 
       }

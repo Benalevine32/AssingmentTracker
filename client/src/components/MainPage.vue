@@ -123,7 +123,29 @@ export default {
       })
     },
     getSortedAssignments(sortBy, sortOrder) {
+      // console.log("getSortedAssignments in MainPage.vue was called :/")
+      // const url = `http://localhost:3001/api/assignments?sortBy=${sortBy}&sortOrder=${sortOrder}&limit=3`;
+
+      // axios.get(url)
+      //   .then((response)=>{
+      //     this.top3AssignmentsList = response.data;
+      //   })
+      //   .catch((error)=>{
+      //     console.error(error);
+      //   });
+
+
       const url = `http://localhost:3001/api/assignments?sortBy=${sortBy}&sortOrder=${sortOrder}&limit=3`;
+    
+      if(sortBy == "difficulty"){
+        url = `http://localhost:3001/api/top3AssignmentsByDifficulty/${this.selectedClass}`;
+      }
+      else if(sortBy == "dueDate"){
+        url = `http://localhost:3001/api/top3AssignmentsByDueDate/${this.selectedClass}`;
+      }
+      else if(sortBy == "estimatedTime"){
+        url = `http://localhost:3001/api/top3AssignmentsByTime/${this.selectedClass}`;
+      }
 
       axios.get(url)
         .then((response)=>{

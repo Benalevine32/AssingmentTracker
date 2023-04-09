@@ -51,39 +51,15 @@ app.get('/api/classes', (req, res) => {
     });
   });
 
-  // GET -> get the 3 most pressing assignments by dueDate
-  app.get('/api/top3AssignmentsByDate', (req, res) => {
-    // the SQL query
-    console.log("You just used top3AssignmentsByDate");
-    connection.query('SELECT * FROM assignments ORDER BY dueDate ASC LIMIT 3', (error, results) => {
-      if (error) {
-        console.log("output that there was an error")
-        console.error('Error executing query top 3 Assignments by dueDate:', error);
-        return res.status(500).json({ error: 'Database error' });
-      }
-      res.json(results);
-    })
-  });
-
-  // GET -> get the 3 most pressing assignments by difficulty
-  app.get('/api/top3AssignmentsByDifficulty', (req, res) => {
-    // the SQL query
-    console.log("You just used top3AssignmentsByDifficulty");
-    connection.query('SELECT * FROM assignments ORDER BY difficulty ASC LIMIT 3', (error, results) => {
-      if (error) {
-        console.log("output that there was an error")
-        console.error('Error executing query top 3 Assignments by difficulty:', error);
-        return res.status(500).json({ error: 'Database error' });
-      }
-      res.json(results);
-    })
-  });
-
-  // GET -> get the 3 most pressing assignments based on the class
-  app.get('/api/top3AssignmentsByDifficulty/:classId', (req, res) => {
-    const classId = req.params.classId;
+  // GET to return the top 3 assignments by difficulty;
+  // ? next to classID means classID is optional.
+  app.get('/api/top3AssignmentsByDifficulty/:classId?', (req, res) => {
+    // if classID is provided, use classID, else, use % to use no classe
+    const classId = req.params.classId || '%';
     console.log("You just used top3AssignmentsByDifficulty with classId:", classId);
-    connection.query('SELECT * FROM assignments WHERE class_id = ? ORDER BY difficulty ASC LIMIT 3', [classId], (error, results) => {
+    // select the top 3 assignments where the classID is close to or equal to the one
+    // passed in, where there is no comparision if none passed in.
+    connection.query('SELECT * FROM assignments WHERE class_id LIKE ? ORDER BY difficulty ASC LIMIT 3', [classId], (error, results) => {
       if (error) {
         console.error('Error executing query top 3 Assignments by difficulty:', error);
         return res.status(500).json({ error: 'Database error' });
@@ -91,6 +67,83 @@ app.get('/api/classes', (req, res) => {
       res.json(results);
     });
   });
+
+  // GET to return the top 3 assignments by dueDate;
+  // ? next to classID means classID is optional.
+  app.get('/api/top3AssignmentsByDueDate/:classId?', (req, res) => {
+    // if classID is provided, use classID, else, use % to use no classe
+    const classId = req.params.classId || '%';
+    console.log("You just used top3AssignmentsByDueDate with classId:", classId);
+    // select the top 3 assignments where the classID is close to or equal to the one
+    // passed in, where there is no comparision if none passed in.
+    connection.query('SELECT * FROM assignments WHERE class_id LIKE ? ORDER BY dueDate ASC LIMIT 3', [classId], (error, results) => {
+      if (error) {
+        console.error('Error executing query top 3 Assignments by dueDate:', error);
+        return res.status(500).json({ error: 'Database error' });
+      }
+      res.json(results);
+    });
+  });
+
+  // GET to return the top 3 assignments by time;
+  // ? next to classID means classID is optional.
+  app.get('/api/top3AssignmentsByTime/:classId?', (req, res) => {
+    // if classID is provided, use classID, else, use % to use no classe
+    const classId = req.params.classId || '%';
+    console.log("You just used top3AssignmentsByTime with classId:", classId);
+    // select the top 3 assignments where the classID is close to or equal to the one
+    // passed in, where there is no comparision if none passed in.
+    connection.query('SELECT * FROM assignments WHERE class_id LIKE ? ORDER BY estimatedTime ASC LIMIT 3', [classId], (error, results) => {
+      if (error) {
+        console.error('Error executing query top 3 Assignments by time:', error);
+        return res.status(500).json({ error: 'Database error' });
+      }
+      res.json(results);
+    });
+  });
+  
+
+  // // GET -> get the 3 most pressing assignments by dueDate
+  // app.get('/api/top3AssignmentsByDate', (req, res) => {
+    
+  //   console.log("You just used top3AssignmentsByDate");
+  //   // the SQL query, orders by dueDate in Ascending order.
+  //   connection.query('SELECT * FROM assignments ORDER BY dueDate ASC LIMIT 3', (error, results) => {
+  //     if (error) {
+  //       console.log("output that there was an error")
+  //       console.error('Error executing query top 3 Assignments by dueDate:', error);
+  //       return res.status(500).json({ error: 'Database error' });
+  //     }
+  //     res.json(results);
+  //   })
+  // });
+
+  // // GET -> get the 3 most pressing assignments by difficulty
+  // app.get('/api/top3AssignmentsByDifficulty', (req, res) => {
+  //   // the SQL query
+  //   console.log("You just used top3AssignmentsByDifficulty");
+  //   connection.query('SELECT * FROM assignments ORDER BY difficulty ASC LIMIT 3', (error, results) => {
+  //     if (error) {
+  //       console.log("output that there was an error")
+  //       console.error('Error executing query top 3 Assignments by difficulty:', error);
+  //       return res.status(500).json({ error: 'Database error' });
+  //     }
+  //     res.json(results);
+  //   })
+  // });
+
+  // // GET -> get the 3 most pressing assignments based on the class
+  // app.get('/api/top3AssignmentsByDifficulty/:classId', (req, res) => {
+  //   const classId = req.params.classId;
+  //   console.log("You just used top3AssignmentsByDifficulty with classId:", classId);
+  //   connection.query('SELECT * FROM assignments WHERE class_id = ? ORDER BY difficulty ASC LIMIT 3', [classId], (error, results) => {
+  //     if (error) {
+  //       console.error('Error executing query top 3 Assignments by difficulty:', error);
+  //       return res.status(500).json({ error: 'Database error' });
+  //     }
+  //     res.json(results);
+  //   });
+  // });
   
   // app.get('/api/top3Assignments', (req, res) => {
   //   connection.query('SELECT * FROM assignments ORDER BY difficulty DESC LIMIT 3', (error, results) => {
@@ -119,7 +172,7 @@ app.get('/api/classes', (req, res) => {
 
   app.post('/api/assignments', (req, res) => {
     const { assignmentName, className, estimatedTime, dueDate, difficulty } = req.body;
-    console.log(formData); // this will print the form data to the console
+    console.log(formData); 
   
     // SQL query to insert the new assignment
     const query = "INSERT INTO assignments (name, description, deadline, difficulty) VALUES (?, ?, ?, ?)";
