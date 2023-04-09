@@ -10,7 +10,7 @@
 
       <div id="restOfScreen">
         <myModal v-show="isModalVisible" @close="closeModal()"/>
-        <PopSort v-show="isSortVisible" @close="closeSort()"/>
+        <PopSort   @update-selection="updateSelection" v-show="isSortVisible" @close="closeSort()"/>
         <AddAssignPop v-show="isAddVisible" @close="closeAdd()" />
         <ClassManage v-show="isClassesVisible" @close="closeClass()"/>
         <button id="menu" v-on:click="toggleDiv()">
@@ -67,28 +67,30 @@ export default {
     };
   },
   filters:{
-            formatDate(value){
-                const date = new Date(value);
-                return date.toLocaleDateString();
-            }
-        },
-        mounted()
-        {
-            axios.get('http://localhost:3001/api/classes')
-            .then((response)=>{
-                this.classesList = response.data;
-            })    
-            .catch((error)=>{
-                console.error(error);
-            });
-            axios.get('http://localhost:3001/api/top3Assignments')
-            .then((response)=>{
-                this.top3AssignmentsList = response.data;
-            })
-            .catch((error)=>{
-                console.error(error);
-            })
-        },
+    formatDate(value){
+        const date = new Date(value);
+        return date.toLocaleDateString();
+    }
+  },
+  mounted()
+  {
+    const userId = localStorage.getItem('user_id')
+      axios.get(`http://localhost:3001/api/classes/${userId}`)
+      .then((response)=>{
+          this.classesList = response.data;
+      })    
+      .catch((error)=>{
+          console.error(error);
+      });
+      axios.get(`http://localhost:3001/api/top3Assignments/${userId}`)
+      .then((response)=>{
+          this.top3AssignmentsList = response.data;
+          console.log(`Top 3 assignments ${this.top3AssignmentsList}`)
+      })
+      .catch((error)=>{
+          console.error(error);
+      })
+  },
   methods: {
     showAdd(){
       this.isAddVisible = true;
@@ -125,7 +127,24 @@ export default {
     logout() {
       localStorage.clear()
       this.$router.push('/')
-    }
+    },
+    updateSelection({ selectedClasses, selectedPriorities, options}) {
+      // Use selectedClasses and selectedPriorities here
+      this.top3AssignmentsList = []
+      const user_id = localStorage.getItem('user_id')
+      if (selectedClasses.length === options.length && selectedPriorities.length === 3){
+        axios.get(`http://localhost:3001/api/top3Assignments/${user_id}`)
+            .then((response)=>{
+                this.top3AssignmentsList = response.data;
+            })
+            .catch((error)=>{
+                console.error(error);
+            })
+      }
+      else if(selectedClasses.length != options.length && selectedPriorities.length === 3){
+        console.log("Bum");
+      }
+    },
   },
 };
 </script>

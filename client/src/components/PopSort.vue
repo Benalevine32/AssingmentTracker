@@ -73,7 +73,12 @@
       },
       close() {
         this.$emit("close");
-      },
+        this.$emit("update-selection", {
+          selectedClasses: this.selectedClasses,
+          selectedPriorities: this.selectedPriorities,
+          options: this.options
+        });
+      }
       
   },
     computed: {

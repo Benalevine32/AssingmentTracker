@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "nodemon AWS_RDS.js",
-    "dev": "nodemon AWS_RDS.js"
+    "dev": "nodemon AWS_RDS.js",
+    "start": "nodemon AWS_RDS.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,6 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.2.0",
     "nodemon": "^2.0.22"
+    
   }
 }

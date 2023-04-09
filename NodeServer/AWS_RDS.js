@@ -2,6 +2,16 @@ const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
 const app = express();
+let time
+let timePoints
+let dueDate
+let datePoints
+let difficulty
+let difficultyPoints
+let priorityPoints
+let currDate
+let days
+let TotalDays
 
 app.use(cors());
 app.use(express.json());
@@ -14,6 +24,29 @@ const connection = mysql.createConnection({
     port: 3306
 })
 
+
+connection.query("Select * from assignments",
+(error,results) => {
+  if (error){
+    console.log("Error getting assignments")
+  }
+  for (let i = 0; i < results.length; i++){
+    setTime(results[i].assignment_id, results[i].estimatedTime)
+    setDate(results[i].dueDate)
+    setDifficulty(results[i].assignment_id, results[i].difficulty); 
+    connection.query( 'UPDATE assignments SET difficultyPoints = ' +difficultyPoints +', timePoints = ' +timePoints +', datePoints = ' +datePoints +' WHERE assignment_id = ' +results[i].assignment_id, 
+    (errorInner) => {
+      if(errorInner){
+        console.log(`Difficulty ${difficultyPoints}`)
+        console.log(`DueDate ${datePoints}`)
+        console.log(`Time ${timePoints}`)
+        console.log(`AssID ${results[i].assignment_id}`)
+        console.log("Error sending values")
+        console.log(errorInner)
+      }
+    })
+  }
+});
 
 //For signup
 app.get('/api/register/:firstName/:lastName/:email/:password', async (req, res) => {
@@ -92,21 +125,8 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
       });
     }
     res.json(results);
-  })
-})
-
-
-
-  app.get('/api/classes', (req, res) => {
-    connection.query('SELECT * FROM classes', (error, results) => {
-      if (error) {
-        console.error('Error executing query Classes:', error);
-        return res.status(500).json({ error: 'Database error' });
-      }
-      res.json(results);
-    });
-  
-
+  });
+});
   app.post('/api/insertClasses', (req, res) => {
     console.log('Request received for insertClass endpoint');
     const className = req.body.className;
@@ -156,12 +176,11 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
         }
         res.status(200).json({ message: 'Class deleted successfully.' });
       }
-    );
-=======
-  // GET -> get the class with the specified class_ID
-  app.get('/api/classes/:class_id', (req, res) => {
+    )});
+
+    app.get('/api/classes/:class_id', (req, res) => {
     const class_id = req.params.class_id;
-    connection.query('SELECT * FROM classes WHERE class_id = ?', [class_id], (error, results) => {
+    connection.query('SELECT * FROM classes WHERE user_id = ?', [class_id], (error, results) => {
       if (error) {
         console.error('Error executing query Classes:', error);
         return res.status(500).json({ error: 'Database error' });
@@ -197,8 +216,12 @@ app.get('/api/assignments', (req, res) => {
     });
   });
 
-  app.get('/api/top3Assignments', (req, res) => {
-    connection.query('SELECT * FROM assignments ORDER BY difficulty DESC LIMIT 3', (error, results) => {
+  app.get('/api/top3Assignments/:user_id', (req, res) => {
+    console.log("Endpoint for top 3 reached")
+    const user_id = req.params.user_id;
+    connection.query('SELECT assignment_id, description, difficulty, dueDate, (timePoints + datePoints + difficultyPoints) AS total_points FROM assignments WHERE user_id = ? ORDER BY total_points ASC LIMIT 3', 
+    [user_id],
+    (error, results) => {
       if (error) {
         console.error('Error executing query Assignments:', error);
         return res.status(500).json({ error: 'Database error' });
@@ -227,4 +250,84 @@ const port = process.env.PORT || 3001;
 
 app.listen(port, ()=>{
   console.log(`Server Listening on port ${port}`);
-});
+  });
+
+function setTime(ID, value)
+{
+time = value
+timePoints = 1
+	if (time < 1)
+		{
+			timePoints = 1
+		}
+	else if (time <= 30)
+		{
+			timePoints = 1;
+		}
+	else if (time <= 60)
+		{
+			timePoints = 2;
+		}
+	else if (time <= 90)
+		{
+			timePoints = 3;
+		}
+	else if (time <= 120)
+		{
+			timePoints = 4;
+		}
+	else if (time <= 150)
+		{
+			timePoints = 5;
+		}
+	else if (time <= 180)
+		{
+			timePoints = 6;
+		}
+	else if (time <= 210)
+		{
+			timePoints = 7;
+		}
+	else if (time <= 240)
+		{
+			timePoints = 8;
+		}
+	else if (time <= 270)
+		{
+			timePoints = 9;
+		}
+	else
+		{
+			timePoints = 10;
+		}
+  
+}
+
+function setDate(dueDate) {
+  console.log(dueDate)
+  const currDate = new Date();
+  const dueDateObj = new Date(dueDate);
+  console.log(currDate)
+  console.log(dueDateObj)
+
+  const difference =  dueDateObj.getTime() -currDate.getTime();
+  const days = Math.ceil(difference / (1000 * 3600 * 24));
+  console.log(days);
+
+  if (days <= 1) {
+    datePoints = 5;
+  } else if (days <= 3) {
+    datePoints = 4; 
+  } else if (days <= 6) {
+    datePoints = 3;
+  } else if (days <= 10) {
+    datePoints = 2;
+  } else {
+    datePoints = 1;
+  }
+}
+
+function setDifficulty(ID, value)
+{
+  difficultyPoints = value
+}
