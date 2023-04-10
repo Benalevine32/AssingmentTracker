@@ -112,8 +112,6 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
   })
 })
 
-
-
   app.get('/api/classes', (req, res) => {
     connection.query('SELECT * FROM classes', (error, results) => {
       if (error) {
@@ -124,7 +122,6 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
     });
   });
   
-
   app.post('/api/insertClasses', (req, res) => {
     console.log('Request received for insertClass endpoint');
     const className = req.body.className;
@@ -175,6 +172,7 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
         res.status(200).json({ message: 'Class deleted successfully.' });
       }
     );
+  });
 
   // GET -> get the class with the specified class_ID
   app.get('/api/classes/:class_id', (req, res) => {
@@ -249,8 +247,8 @@ app.get('/api/users', (req, res)=> {
         return res.status(500).json({error: 'Database error'});
       }
       res.json(results);
-  })
-})
+  });
+});
 
 app.get('/api/insertAssignment/:pAssignmentName/:pSelectedClass/:pEstimatedTime/:pDueDate/:pDifficulty', (req,res)=>{
   console.log('posting..');
@@ -268,9 +266,5 @@ app.get('/api/insertAssignment/:pAssignmentName/:pSelectedClass/:pEstimatedTime/
       return res.status(500).json({error: 'Database error'});
     }
     console.log('Assignments added successfully');
-
-  });
-  
-})
+  });  
 });
-
