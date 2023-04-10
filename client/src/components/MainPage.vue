@@ -48,7 +48,6 @@ import myModal from './myModal.vue';
 import PopSort from './PopSort.vue';
 import AddAssignPop from './AddAssignPop.vue';
 import ClassManage from './ClassManage.vue';
-import axios from 'axios';
 export default {
   name: "MainPage",
   components: {
