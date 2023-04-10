@@ -6,31 +6,41 @@
             </div>
             <div class="Title">
                 <b>Add Assignment</b>
+                <p>{{ submissionMessage }}</p>
             </div>
             <div class="InputList">
                 <div class="IndInp">
                     <label for="Name">Assignment Name:</label><br>
-                    <input type="text" id="Name" name="Name"><br>
+                    <input type="text" id="Name" name="Name" v-model="assignmentName" ><br>
                 </div>
                 <div class="IndInp">
                   <label for="Class">Class:</label><br>
-                  <div class="dropdown-content">
-                    <li v-for="(option, index) in options" :key="index">
-                        <a :for="index">{{ option.text }}</a>
-                    </li>
-                  </div>
+                      <select name="classSelect" id ="selectedClass" v-model="selectedClass">
+                        <option v-for="(item, index) in classesList" :value="item.class_id" :key="index">{{ item.className }}</option>                      
+                      </select>
                 </div>
                 <div class="IndInp">
-                    <label for="Time">Estimated Time:</label><br>
-                    <input type="text" id="Time" name="Time"><br>
+                  <label for="Difficulty">Estimated Time:</label><br>
+                    <select name="Time" id="Time" v-model="estimatedTime">
+                      <option value="30">30 mins</option>
+                      <option value="60">1 hour</option>
+                      <option value="90">1.5 hours</option>
+                      <option value="120">2 hours</option>
+                      <option value="150">2.5 hours</option>
+                      <option value="180">3 hours</option>
+                      <option value="210">3.5 hours</option>
+                      <option value="240">4 hours</option>
+                      <option value="270">4.5 hours</option>
+                      <option value="300">5 hours</option>
+                    </select>
                 </div>
                 <div class="IndInp">
                     <label for="DueDate">Due Date:</label><br>
-                    <input type="text" id="DueDate" name="DueDate"><br>
+                    <input type="date" id="DueDate" name="DueDate" v-model="dueDate"><br>
                 </div>
                 <div class="IndInp">
                     <label for="Difficulty">Difficulty:</label><br>
-                    <select name="cars" id="cars">
+                    <select name="cars" id="cars" v-model="difficulty">
                       <option value="1">Very Easy</option>
                       <option value="2">Easy</option>
                       <option value="3">Medium</option>
@@ -38,38 +48,74 @@
                       <option value="5">Very Hard</option>
                     </select>                
                   </div>
+                  <div class="IndInp">
+                      <button @click="submit">Submit</button>
+                   </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-  export default{
+import axios from 'axios';
+  export default
+  {
     name: "AddAssignPop",
     data(){
       return{
         arrayOfClasses: [],
-        options: [
-        {
-          text: 'Class 1',
-        },
-        {
-          text: 'Class 2',
-        },
-        {
-          text: 'Class 3',
-        }
-        ],
+        classesList: [],
+        assignmentName: '',
+        selectedClass: '',
+        estimatedTime: '',
+        dueDate: '',
+        difficulty: '',
+        submissionMessage:'',
       }
     },
-    methods:{
+    mounted()
+    {
+      axios.get('http://localhost:3001/api/classes')
+            .then((response)=>{
+                this.classesList = response.data;
+                console.log(response.data)
+            })    
+    },
+    methods:
+    {
       close() {
         this.$emit("close");
       },
+      async submit()
+      {
+        console.log("submitting form...");
+      
+        const pAssignmentName= this.assignmentName;
+        const pSelectedClass= this.selectedClass;
+        const pEstimatedTime= this.estimatedTime;
+        const pDueDate= this.dueDate;
+        const pDifficulty= this.difficulty;
+
+        const queryURI = `http://localhost:3001/api/insertAssignment/${pAssignmentName}/${pSelectedClass}/${ pEstimatedTime}/${pDueDate}/${pDifficulty}`
+        try
+        {
+           await fetch(queryURI)
+        }
+        catch{
+          throw new Error('Failure with posting new assignment')
+        }
+            // this.submissionMessage='Submission Sucessful'
+            this.assignmentName = '';
+            this.selectedClass = '';
+            this.estimatedTime = '';
+            this.dueDate = '';
+            this.difficulty = '';
+      },
     },
-    
   }
 </script>
+
+
 
 <style>
 .sortPop{
@@ -152,4 +198,7 @@
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   }
+  .dropdown:hover .dropdown-content {
+  display: block;
+}
 </style>
