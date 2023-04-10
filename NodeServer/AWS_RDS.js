@@ -18,7 +18,7 @@ const port = process.env.PORT || 3001;
 
 app.listen(port, ()=>{
   console.log(`Server Listening on port ${port}`);
-})
+});
 
 app.get('/api/allAssignmentsWithClass', (req, res)=> {
   connection.query('SELECT assignments.*, classes.className as className from assignments join classes on assignments.class_id = classes.class_id', (error, results)=>{
@@ -29,7 +29,7 @@ app.get('/api/allAssignmentsWithClass', (req, res)=> {
       }
       res.json(results);
   })
-})
+});
 
 
 //For signup
