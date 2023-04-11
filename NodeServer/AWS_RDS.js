@@ -1,7 +1,6 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
-const { json } = require("body-parser");
 const app = express();
 let time
 let timePoints
@@ -14,7 +13,6 @@ let currDate
 let days
 let TotalDays
 
-app.use(express());
 app.use(cors());
 app.use(express.json());
 
@@ -25,22 +23,6 @@ const connection = mysql.createConnection({
     database: 'assignmentTracker', 
     port: 3306
 })
-const port = process.env.PORT || 3001;
-
-app.listen(port, ()=>{
-  console.log(`Server Listening on port ${port}`);
-});
-
-app.get('/api/allAssignmentsWithClass', (req, res)=> {
-  connection.query('SELECT assignments.*, classes.className as className from assignments join classes on assignments.class_id = classes.class_id', (error, results)=>{
-      if(error)
-      {
-        console.error('Error excecuting query Assignments: ', error);
-        return res.status(500).json({error: 'Database error'});
-      }
-      res.json(results);
-  })
-});
 
 
 connection.query("Select * from assignments",
@@ -194,11 +176,9 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
         }
         res.status(200).json({ message: 'Class deleted successfully.' });
       }
-    );
-  });
+    )});
 
-  // GET -> get the class with the specified class_ID
-  app.get('/api/classes/:class_id', (req, res) => {
+    app.get('/api/classes/:class_id', (req, res) => {
     const class_id = req.params.class_id;
     connection.query('SELECT * FROM classes WHERE user_id = ?', [class_id], (error, results) => {
       if (error) {
@@ -266,16 +246,7 @@ app.get('/api/assignments', (req, res) => {
   });
 
 
-app.get('/api/users', (req, res)=> {
-  connection.query('SELECT * from users ', (error, results)=>{
-      if(error)
-      {
-        console.error('Error excecuting query Assignments: ', error);
-        return res.status(500).json({error: 'Database error'});
-      }
-      res.json(results);
-  });
-});
+const port = process.env.PORT || 3001;
 
 app.listen(port, ()=>{
   console.log(`Server Listening on port ${port}`);
@@ -360,22 +331,3 @@ function setDifficulty(ID, value)
 {
   difficultyPoints = value
 }
-=======
-app.get('/api/insertAssignment/:pAssignmentName/:pSelectedClass/:pEstimatedTime/:pDueDate/:pDifficulty', (req,res)=>{
-  console.log('posting..');
-
-  assignmentName = req.params.pAssignmentName;
-  selectedClass = req.params.pSelectedClass;
-  estimatedTime = req.params.pEstimatedTime;
-  dueDate = req.params.pDueDate;
-  diff = req.params.pDifficulty;
-  
-
-  connection.query(`INSERT INTO assignments (class_id, description, difficulty, dueDate, estimatedTime) VALUES ("${selectedClass}","${assignmentName}", "${diff}", "${dueDate}", "${estimatedTime}")`,(error, res)=>{
-    if(error){
-      console.error('Error exececuting query: ', error);
-      return res.status(500).json({error: 'Database error'});
-    }
-    console.log('Assignments added successfully');
-  });  
-});
