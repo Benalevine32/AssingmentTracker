@@ -16,7 +16,6 @@
         <button id="menu" v-on:click="toggleDiv()">
           {{ sidePanelButton }}
         </button>
-        
         <div id="task-row-1">
           <div 
             v-for="item in top3AssignmentsList"
@@ -33,7 +32,6 @@
           </div>
           <button id="addAssignment" @click="showAdd()">+</button>
         </div>
-        
       </div>
     </div>
   </body>
@@ -43,11 +41,11 @@
 
 
 <script>
-import axios from 'axios'
 import myModal from './myModal.vue';
 import PopSort from './PopSort.vue';
 import AddAssignPop from './AddAssignPop.vue';
 import ClassManage from './ClassManage.vue';
+import axios from 'axios';
 export default {
   name: "MainPage",
   components: {
@@ -65,7 +63,7 @@ export default {
       sidePanel: false,
       sidePanelButton: "Menu",
       classesList: [],
-      top3AssignmentsList: [],
+      top3AssignmentsList: []
     };
   },
   filters:{
@@ -353,4 +351,3 @@ body {
   align-items: center;
 }
 </style>
-
