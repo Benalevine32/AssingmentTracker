@@ -17,35 +17,27 @@
         <myModal v-show="isModalVisible" @close="closeModal()" />
         <PopSort v-show="isSortVisible" @close="closeSort()" />
         <AddAssignPop v-show="isAddVisible" @close="closeAdd()" />
-        <ClassManage v-show="isClassesVisible" @close="closeClass()" />
-        <center>
-          <div id="task-row-1">
-            <div
-              v-for="item in top3AssignmentsList"
-              :key="item.description"
-              class="task"
-              id="taskItem"
-            >
-              <div id="taskArea">
-                <div id="title">
-                  <p>{{ item.description }}</p>
-                </div>
-                <div id="dueDate">
-                  <p>{{ item.dueDate | formatDate }}</p>
-                </div>
-                <div id="difficulty">
-                  <p>{{ item.difficulty }}</p>
-                </div>
-              </div>
+        <ClassManage v-show="isClassesVisible" @close="closeClass()"/>
+        <button id="menu" v-on:click="toggleDiv()">
+          {{ sidePanelButton }}
+        </button>
+        
+        <div id="task-row-1">
+          <div 
+            v-for="item in top3AssignmentsList"
+            :key="item.description"
+            class="task" 
+            id="taskRow1"
+          >
+            <div id="main-task-title">
+             <p>{{ item.description }}</p>
+             <p>{{ item.dueDate | formatDate }}</p>
+             <p>{{ item.difficulty }}</p>
+
             </div>
           </div>
-        </center>
-        <button id="addAssignment" @click="showAdd()">+</button>
-      </div>
-      <div v-if="sidePanel" id="sidePanel">
-        <button id="sortBy" @click="showSort()">Sort By...</button>
-        <button id="viewTasks" @click="showModal()">View All Tasks</button>
-        <button id="Classes" @click="showClasses()">Classes</button>
+          <button id="addAssignment" @click="showAdd()">+</button>
+        </div>
       </div>
     </div>
   </body>
@@ -55,11 +47,11 @@
 
 
 <script>
-import myModal from "./myModal.vue";
-import PopSort from "./PopSort.vue";
-import AddAssignPop from "./AddAssignPop.vue";
-import ClassManage from "./ClassManage.vue";
-import axios from "axios";
+import axios from 'axios'
+import myModal from './myModal.vue';
+import PopSort from './PopSort.vue';
+import AddAssignPop from './AddAssignPop.vue';
+import ClassManage from './ClassManage.vue';
 export default {
   name: "MainPage",
   components: {
@@ -320,3 +312,4 @@ body {
   align-items: center;
 }
 </style>
+
