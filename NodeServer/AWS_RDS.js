@@ -110,7 +110,34 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
     }
     res.json(results);
   })
-})
+});
+
+
+
+app.get('/api/classes', (req, res) => {
+  connection.query('SELECT * FROM classes', (error, results) => {
+    if (error) {
+      console.error('Error executing query Classes:', error);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json(results);
+  });
+});
+  
+
+app.post('/api/insertClasses', (req, res) => {
+  console.log('Request received for insertClass endpoint');
+  const className = req.body.className;
+  const classDescription = req.body.classDescription;
+  const userID = req.body.userID;
+
+  connection.query(
+    'INSERT INTO classes (className, classDescription, user_id) VALUES (?, ?, ?)',
+    [className, classDescription, userID],
+    (error, results) => {
+      if (error) {
+        console.error('Error executing query setting class:', error);
+        return res.status(500).json({ error: `Database error: ${error.message}` });
 
   app.get('/api/classes', (req, res) => {
     connection.query('SELECT * FROM classes', (error, results) => {
@@ -138,25 +165,27 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
         }
         res.status(200).json({ message: 'Class added successfully.' });
       }
-    );
-  });
+      res.status(200).json({ message: 'Class added successfully.' });
+    }
+  );
+});
   
-  app.delete('/api/deleteAssignmentToClass/:class_id', (req, res) => {
-    console.log('Request received for deleteAssignmentToClass endpoint');
-    const class_id = req.params.class_id; // Change this line to use req.params
-  
-    connection.query(
-      'DELETE FROM assignments WHERE class_id = ?',
-      [class_id],
-      (error, results) => {
-        if (error) {
-          console.error('Error executing query setting class:', error);
-          return res.status(500).json({ error: `Database error: ${error.message}` });
-        }
-        res.status(200).json({ message: 'Class assignments successfully.' });
+app.delete('/api/deleteAssignmentToClass/:class_id', (req, res) => {
+  console.log('Request received for deleteAssignmentToClass endpoint');
+  const class_id = req.params.class_id; // Change this line to use req.params
+
+  connection.query(
+    'DELETE FROM assignments WHERE class_id = ?',
+    [class_id],
+    (error, results) => {
+      if (error) {
+        console.error('Error executing query setting class:', error);
+        return res.status(500).json({ error: `Database error: ${error.message}` });
       }
-    );
-  });
+      res.status(200).json({ message: 'Class assignments successfully.' });
+    }
+  );
+});
 
   app.delete('/api/deleteClass/:class_id', (req, res) => {
     console.log('Request received for delete Class endpoint');
@@ -185,6 +214,7 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
       res.json(results);
     });
   });
+});
 
 app.get('/api/assignments', (req, res) => {
     console.log("Made it past get request")
@@ -250,6 +280,9 @@ app.get('/api/users', (req, res)=> {
   });
 });
 
+app.listen(port, ()=>{
+  console.log(`Server Listening on port ${port}`);
+})
 app.get('/api/insertAssignment/:pAssignmentName/:pSelectedClass/:pEstimatedTime/:pDueDate/:pDifficulty', (req,res)=>{
   console.log('posting..');
 
