@@ -90,14 +90,14 @@ export default
     async submit()
     {
       console.log("submitting form...");
-    
+      const user_id = localStorage.getItem('user_id')
       const pAssignmentName= this.assignmentName;
       const pSelectedClass= this.selectedClass;
       const pEstimatedTime= this.estimatedTime;
       const pDueDate= this.dueDate;
       const pDifficulty= this.difficulty;
 
-      const queryURI = `http://localhost:3001/api/insertAssignment/${pAssignmentName}/${pSelectedClass}/${ pEstimatedTime}/${pDueDate}/${pDifficulty}`
+      const queryURI = `http://localhost:3001/api/insertAssignment/${pAssignmentName}/${pSelectedClass}/${ pEstimatedTime}/${pDueDate}/${pDifficulty}/${user_id}`
       try
       {
          await fetch(queryURI)
