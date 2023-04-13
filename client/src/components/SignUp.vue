@@ -36,7 +36,7 @@ export default {
       email: "",
       password: "",
       signUpMSG: "",
-      image: require("@/assets/blackLogo.png"),
+      image: require("@/assets/goodLogo.png"),
     };
   },
   methods: {

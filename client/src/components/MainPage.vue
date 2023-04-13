@@ -78,7 +78,7 @@ export default {
       sidePanelButton: "Menu",
       classesList: [],
       top3AssignmentsList: [],
-      image: require("@/assets/newlogo.png"),
+      image: require("@/assets/goodLogo.png"),
     };
   },
   filters: {

@@ -2,11 +2,9 @@
   <body>
     <div id="bg">
       <div id="mainBox">
-        <center>
         <div id="titleLogo">
           <img :src="image" id="img" />
         </div>
-        </center>
         <p id="errorMSG">{{ loginMSG }}</p>
 
         <center>
@@ -46,7 +44,7 @@ export default {
       isUserValid: "",
       validationResponse: "",
       loginMSG: "",
-      image: require("@/assets/blackLogo.png"),
+      image: require("@/assets/goodLogo.png"),
     };
   },
   created() {
@@ -91,6 +89,7 @@ html {
   font-family: "Nunito", sans-serif;
 }
 
+
 #bg {
   height: 100vh;
   width: 100vw;
@@ -115,8 +114,6 @@ html {
 
   position: relative;
 
-  width: 50%;
-  height: 75%;
 
   background: #ffffff;
   border: 1px solid #949090;
@@ -125,6 +122,7 @@ html {
   margin: 0;
   display: flex;
   flex-direction: column;
+  max-height: 90vh;
 }
 
 input {
@@ -171,10 +169,19 @@ input {
 }
 
 #titleLogo {
-  width: 110px;
-  height: 110px;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
 }
-
+#img{
+  position: relative;
+  width: 30%;
+  height: 30%;
+}
 #errorMSG{
   color: red;
 }
