@@ -1,5 +1,5 @@
 <template>
-  <body>
+    <body>
     <div id="bg">
       <div id="bannerContainer">
         <div id="left">
@@ -46,28 +46,6 @@
         <button id="sortBy" @click="showSort()">Sort By...</button>
         <button id="viewTasks" @click="showModal()">View All Tasks</button>
         <button id="Classes" @click="showClasses()">Classes</button>
-        <ClassManage v-show="isClassesVisible" @close="closeClass()"/>
-        <button id="menu" v-on:click="toggleDiv()">
-          {{ sidePanelButton }}
-        </button>
-        
-        <div id="task-row-1">
-          <div 
-            v-for="item in top3AssignmentsList"
-            :key="item.description"
-            class="task" 
-            id="taskRow1"
-          >
-            <div id="main-task-title">
-             <p>{{ item.description }}</p>
-             <p>{{ item.dueDate | formatDate }}</p>
-             <p>{{ item.difficulty }}</p>
-
-            </div>
-          </div>
-          <button id="addAssignment" @click="showAdd()">+</button>
-        </div>
-        
       </div>
     </div>
   </body>
@@ -82,11 +60,6 @@ import PopSort from "./PopSort.vue";
 import AddAssignPop from "./AddAssignPop.vue";
 import ClassManage from "./ClassManage.vue";
 import axios from "axios";
-import axios from 'axios'
-import myModal from './myModal.vue';
-import PopSort from './PopSort.vue';
-import AddAssignPop from './AddAssignPop.vue';
-import ClassManage from './ClassManage.vue';
 export default {
   name: "MainPage",
   components: {
