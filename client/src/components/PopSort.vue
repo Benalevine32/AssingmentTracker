@@ -55,7 +55,8 @@
       };
     },
     mounted() {
-      axios.get('http://localhost:3001/api/classes')
+      const user_id = localStorage.getItem('user_id')
+      axios.get(`http://localhost:3001/api/classes/${user_id}`)
       .then((response)=>{
         this.options = response.data;
         this.selectedClasses = this.options.map(option => option.className);
