@@ -111,7 +111,8 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
 
 
 app.get('/api/classes', (req, res) => {
-  connection.query('SELECT * FROM classes', (error, results) => {
+  const userId = req.query.userID;
+  connection.query('SELECT * FROM classes where user_id = ?',[userId], (error, results) => {
     if (error) {
       console.error('Error executing query Classes:', error);
       return res.status(500).json({ error: 'Database error' });
@@ -242,7 +243,8 @@ app.get('/api/numAssignments/:class_id', (req, res) => {
 });
 
 app.get('/api/top3Assignments', (req, res) => {
-  connection.query('SELECT * FROM assignments ORDER BY difficulty DESC LIMIT 3', (error, results) => {
+  const UserId = req.query.userID;
+  connection.query('SELECT * FROM assignments where user_id = ? ORDER BY difficulty DESC LIMIT 3', [UserId], (error, results) => {
     if (error) {
       console.error('Error executing query Assignments:', error);
       return res.status(500).json({ error: 'Database error' });
@@ -284,17 +286,18 @@ app.listen(port, () => {
 })
 
 
-app.get('/api/insertAssignment/:pAssignmentName/:pSelectedClass/:pEstimatedTime/:pDueDate/:pDifficulty', (req, res) => {
+app.get('/api/insertAssignment/:pAssignmentName/:pSelectedClass/:pEstimatedTime/:pDueDate/:pDifficulty/:pUserID', (req, res) => {
   console.log('posting..');
 
-  assignmentName = req.params.pAssignmentName;
-  selectedClass = req.params.pSelectedClass;
-  estimatedTime = req.params.pEstimatedTime;
-  dueDate = req.params.pDueDate;
-  diff = req.params.pDifficulty;
+  const assignmentName = req.params.pAssignmentName;
+  const selectedClass = req.params.pSelectedClass;
+  const estimatedTime = req.params.pEstimatedTime;
+  const dueDate = req.params.pDueDate;
+  const diff = req.params.pDifficulty;
+   UserID = req.params.pUserID;
 
 
-  connection.query(`INSERT INTO assignments (class_id, description, difficulty, dueDate, estimatedTime) VALUES ("${selectedClass}","${assignmentName}", "${diff}", "${dueDate}", "${estimatedTime}")`, (error, res) => {
+  connection.query(`INSERT INTO assignments (class_id, description, difficulty, dueDate, estimatedTime, user_id) VALUES ("${selectedClass}","${assignmentName}", "${diff}", "${dueDate}", "${estimatedTime}", "${UserID}")`, (error, res) => {
     if (error) {
       console.error('Error exececuting query: ', error);
       return res.status(500).json({ error: 'Database error' });

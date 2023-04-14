@@ -98,7 +98,11 @@ export default {
         console.error(error);
       });
     axios
-      .get("http://localhost:3001/api/top3Assignments")
+      .get("http://localhost:3001/api/top3Assignments",{
+        params:{
+          userID: localStorage.getItem('user_id'),
+        }
+      })
       .then((response) => {
         this.top3AssignmentsList = response.data;
       })

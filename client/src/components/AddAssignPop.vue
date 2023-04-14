@@ -75,7 +75,12 @@ import axios from 'axios';
     },
     mounted()
     {
-      axios.get('http://localhost:3001/api/classes')
+      axios
+      .get('http://localhost:3001/api/classes',{
+        params:{
+          userID: localStorage.getItem('user_id'),
+        }
+      })
             .then((response)=>{
                 this.classesList = response.data;
                 console.log(response.data)
@@ -95,8 +100,9 @@ import axios from 'axios';
         const pEstimatedTime= this.estimatedTime;
         const pDueDate= this.dueDate;
         const pDifficulty= this.difficulty;
+        const UserID = localStorage.getItem('user_id')
 
-        const queryURI = `http://localhost:3001/api/insertAssignment/${pAssignmentName}/${pSelectedClass}/${ pEstimatedTime}/${pDueDate}/${pDifficulty}`
+        const queryURI = `http://localhost:3001/api/insertAssignment/${pAssignmentName}/${pSelectedClass}/${ pEstimatedTime}/${pDueDate}/${pDifficulty}/${UserID}`
         try
         {
            await fetch(queryURI)
