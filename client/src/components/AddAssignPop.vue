@@ -82,35 +82,51 @@ export default
               console.log(response.data)
       })    
     },
-  methods:
-  {
-    close() {
-      this.$emit("close");
+    mounted()
+    {
+      axios
+      .get('http://localhost:3001/api/classes',{
+        params:{
+          userID: localStorage.getItem('user_id'),
+        }
+      })
+            .then((response)=>{
+                this.classesList = response.data;
+                console.log(response.data)
+            })    
+
     },
     async submit()
     {
-      console.log("submitting form...");
-      const user_id = localStorage.getItem('user_id')
-      const pAssignmentName= this.assignmentName;
-      const pSelectedClass= this.selectedClass;
-      const pEstimatedTime= this.estimatedTime;
-      const pDueDate= this.dueDate;
-      const pDifficulty= this.difficulty;
-
-      const queryURI = `http://localhost:3001/api/insertAssignment/${pAssignmentName}/${pSelectedClass}/${ pEstimatedTime}/${pDueDate}/${pDifficulty}/${user_id}`
-      try
+      close() {
+        this.$emit("close");
+      },
+      async submit()
       {
-         await fetch(queryURI)
-      }
-      catch{
-        throw new Error('Failure with posting new assignment')
-      }
-          // this.submissionMessage='Submission Sucessful'
-          this.assignmentName = '';
-          this.selectedClass = '';
-          this.estimatedTime = '';
-          this.dueDate = '';
-          this.difficulty = '';
+        console.log("submitting form...");
+      
+        const pAssignmentName= this.assignmentName;
+        const pSelectedClass= this.selectedClass;
+        const pEstimatedTime= this.estimatedTime;
+        const pDueDate= this.dueDate;
+        const pDifficulty= this.difficulty;
+        const UserID = localStorage.getItem('user_id')
+
+        const queryURI = `http://localhost:3001/api/insertAssignment/${pAssignmentName}/${pSelectedClass}/${ pEstimatedTime}/${pDueDate}/${pDifficulty}/${UserID}`
+        try
+        {
+           await fetch(queryURI)
+        }
+        catch{
+          throw new Error('Failure with posting new assignment')
+        }
+            // this.submissionMessage='Submission Sucessful'
+            this.assignmentName = '';
+            this.selectedClass = '';
+            this.estimatedTime = '';
+            this.dueDate = '';
+            this.difficulty = '';
+      },
     },
   },
 }

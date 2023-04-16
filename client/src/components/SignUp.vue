@@ -1,18 +1,29 @@
 <template>
-  <div id="container">
-    <p id="title">Register</p>
-    <p id="errorMSG">{{ signUpMSG }}</p>
+  <body>
+    <div id="bg">
+      <div id="mainBox">
+        <center>
+          <div id="titleLogo">
+            <img :src="image" id="img" />
+          </div>
+        </center>
+        <p id="errorMSG">{{ signUpMSG }}</p>
 
-    <div id="registerBoxes">
-      <input type="text" v-model="userfirstName" placeholder="First Name" />
-      <input type="text" v-model="userlastName" placeholder="Last Name" />
-      <input type="text" v-model="useremail" placeholder="Email" />
-      <input type="text" v-model="userpassword" placeholder="Password" />
-      <button type="button" id="register" @click="register()">Register</button>
-      <button type="button" id="cancel" @click="cancelRegister()">Cancel</button>
-
+        <div id="registerBoxes">
+          <input type="text" v-model="userfirstName" placeholder="    First Name" />
+          <input type="text" v-model="userlastName" placeholder="    Last Name" />
+          <input type="text" v-model="useremail" placeholder="    Email" />
+          <input type="text" v-model="userpassword" placeholder="    Password" />
+          <button type="button" id="register" @click="register()">
+            Register
+          </button>
+          <button type="button" id="cancel" @click="cancelRegister()">
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -25,6 +36,7 @@ export default {
       email: "",
       password: "",
       signUpMSG: "",
+      image: require("@/assets/goodLogo.png"),
     };
   },
   methods: {
@@ -39,116 +51,113 @@ export default {
       const data = await response.json();
       console.log(data);
       if (data.length) {
-        this.signUpMSG = "registration failed"
+        this.signUpMSG = "registration failed";
         return;
-      }
-      else{
-        this.signUpMSG = "registration successfull"
+      } else {
+        this.signUpMSG = "registration successfull";
         this.$router.push("/");
       }
-
     },
-    cancelRegister(){
+    cancelRegister() {
       this.$router.push("/");
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-#errorMSG{
+body,
+html {
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+}
+
+#bg {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  margin: 0;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  font-family: "Calibri";
-  font-style: bold;
-  font-weight: 200;
-  font-size: 20px;
-  color: #f11818;
-  background: none;
-}
-#cancel{
-  position: relative;
-  margin-top: -10px;
-  margin-left: 10px;
-  float: left;
-  width: 177px;
-  height: 29px;
-  text-align: left;
-
-  font-family: "Calibri";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 15px;
-  border: none;
-  color: #534949;
-  background: none;
-  cursor: pointer;
-
+  min-height: 100vh;
+  background: rgb(0,83,204);
+  background: linear-gradient(6deg, rgba(0,83,204,1) 0%, rgba(252,176,69,1) 100%);
 }
 
-#register{
-  float: right;
-  width: 136px;
-  height: 85px;
-
-  background: #5dfa6c;
-  border-radius: 10px;
-  font-family: "Calibri";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-
-}
-
-#title {
-  text-align: center;
-  font-family: "Calibri";
-  font-style: bold;
-  font-weight: 600;
-  font-size: 40px;
-  color: #534949;
-  background: none;
-  margin: 40px;
-}
-#registerBoxes{
-  margin: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-#container{
+#mainBox {
+  padding: 20px;
   box-sizing: border-box;
 
-  position: absolute;
-  width: 900px;
-  height: 900px;
+  position: relative;
+
+  width: 50%;
+  height: 90%;
 
   background: #ffffff;
   border: 1px solid #949090;
   border-radius: 32px;
 
   margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
 }
 
 input {
   box-sizing: border-box;
+  margin: 10px;
+  width: 90%;
+  height: 40px;
 
-  width: 543px;
-  height: 66px;
-
-  border: 4px solid #4589ef;
-  border-radius: 20px;
-  margin-bottom: 40px;
+  border: 2px solid #9c9c9c;
+  border-radius: 10px;
 }
 
+#register {
+  width: 90%;
+  height: 50px;
+  backdrop-filter: blur(5px);
+  background-color: rgb(85, 105, 255);
+  border-radius: 29px;
+
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+#cancel {
+  width: 90%;
+  height: 50px;
+  background: #ffffff;
+  color: rgb(85, 105, 255);
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+#title {
+  margin: 0px;
+  font-weight: 700;
+  font-size: 35px;
+}
+
+#titleLogo {
+  width: 110px;
+  height: 110px;
+}
+
+#errorMSG {
+  color: red;
+}
 </style>

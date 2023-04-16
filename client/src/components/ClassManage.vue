@@ -55,8 +55,12 @@ export default{
     },
     async mounted() {
         try {
-            const userID = localStorage.getItem('user_id');
-            const response = await axios.get(`http://localhost:3001/api/classes/${userID}`);
+            const response = await axios.get('http://localhost:3001/api/classes',{
+                params:{
+                    userID: localStorage.getItem('user_id')
+                }
+            });
+
             this.classes = response.data;
             for (let i = 0; i < this.classes.length; i++) {
             const assignmentCount = await this.fetchAssignmentCount(this.classes[i].class_id);
