@@ -197,6 +197,8 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
         console.error('Error executing query Classes:', error);
         return res.status(500).json({ error: 'Database error' });
       }
+      console.log("Success sending Results")
+      console.log(results)
       res.json(results);
     });
   });

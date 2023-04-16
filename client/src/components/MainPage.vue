@@ -10,7 +10,7 @@
   
         <div id="restOfScreen">
           <myModal v-show="isModalVisible" @close="closeModal()"/>
-          <PopSort   @update-selection="updateSelection" v-show="isSortVisible" @close="closeSort()"/>
+          <PopSort @update-selection="updateSelection" v-show="isSortVisible" @close="closeSort()"/>
           <AddAssignPop v-show="isAddVisible" @close="closeAdd()" />
           <ClassManage v-show="isClassesVisible" @close="closeClass()"/>
           <button id="menu" v-on:click="toggleDiv()">
