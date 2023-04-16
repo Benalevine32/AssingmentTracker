@@ -1,5 +1,5 @@
 <template>
-    <body>
+  <body>
     <div id="bg">
       <div id="bannerContainer">
         <div id="left">
@@ -13,7 +13,12 @@
         </div>
       </div>
 
-      <div id="restOfScreen">
+      <div
+        id="restOfScreen"
+        :style="{
+          'background-image': 'url(' + require('@/assets/ceta.jpg') + ')',
+        }"
+      >
         <myModal v-show="isModalVisible" @close="closeModal()" />
         <PopSort v-show="isSortVisible" @close="closeSort()" />
         <AddAssignPop v-show="isAddVisible" @close="closeAdd()" />
@@ -34,7 +39,13 @@
                   <p>{{ item.dueDate | formatDate }}</p>
                 </div>
                 <div id="difficulty">
-                  <p>{{ item.difficulty }}</p>
+                  <radial-progress-bar
+                    :diameter="150"
+                    :completed-steps="item.difficulty"
+                    :total-steps="totalSteps"
+                  >
+                    <p>{{ item.difficulty }}% Difficulty</p>
+                  </radial-progress-bar>
                 </div>
               </div>
             </div>
@@ -44,7 +55,7 @@
       </div>
       <div v-if="sidePanel" id="sidePanel">
         <button id="sortBy" @click="showSort()">Sort By...</button>
-        <button id="viewTasks" @click="showModal()">View All Tasks</button>
+        <button id="viewTasks" @click="showModal()">Edit Tasks</button>
         <button id="Classes" @click="showClasses()">Classes</button>
       </div>
     </div>
@@ -55,6 +66,7 @@
 
 
 <script>
+import RadialProgressBar from "vue-radial-progress";
 import myModal from "./myModal.vue";
 import PopSort from "./PopSort.vue";
 import AddAssignPop from "./AddAssignPop.vue";
@@ -67,9 +79,11 @@ export default {
     PopSort,
     AddAssignPop,
     ClassManage,
+    RadialProgressBar,
   },
   data() {
     return {
+      totalSteps: 100,
       isAddVisible: false,
       isSortVisible: false,
       isModalVisible: false,
@@ -79,7 +93,6 @@ export default {
       classesList: [],
       top3AssignmentsList: [],
       image: require("@/assets/goodLogo.png"),
-
     };
   },
   filters: {
@@ -98,10 +111,10 @@ export default {
         console.error(error);
       });
     axios
-      .get("http://localhost:3001/api/top3Assignments",{
-        params:{
-          userID: localStorage.getItem('user_id'),
-        }
+      .get("http://localhost:3001/api/top3Assignments", {
+        params: {
+          userID: localStorage.getItem("user_id"),
+        },
       })
       .then((response) => {
         this.top3AssignmentsList = response.data;
@@ -154,13 +167,11 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap");
 
-
-#taskArea{
+#taskArea {
   position: absolute;
   width: 100%;
   height: 100%;
   font-family: "Nunito", sans-serif;
-
 }
 
 head,
@@ -250,13 +261,13 @@ body {
 }
 
 #restOfScreen {
-  background: #1f1e1e;
   position: absolute;
   left: 0px;
   bottom: 0px;
   height: 80%;
   width: 100%;
   overflow: hidden;
+  background-size: cover;
 }
 
 #sortBy,
@@ -269,20 +280,20 @@ body {
 
   border: none;
   cursor: pointer;
-
-  backdrop-filter: blur(5px);
-  background-color: rgba(255, 252, 242, 0.8);
   border-radius: 29px;
-  box-shadow: -10px 10px 40px 0px rgba(0, 0, 0, 1),
-    inset 5px -5px 16px 0px rgb(138, 136, 131),
-    inset 0px 11px 28px 0px rgb(255, 252, 242, 1);
+  backdrop-filter: blur(5px);
+  background-color: rgba(67, 135, 232, 1);
+  border-radius: 29px;
+  box-shadow: -10px 10px 40px 0px rgb(161, 161, 161, 0.2),
+    inset 5px -5px 16px 0px rgba(67, 135, 232, 1),
+    inset 0px 11px 28px 0px rgb(255, 255, 255, 0.4);
 }
 
 .task {
   position: relative;
-  margin: 10px;
-  width: 200px;
-  height: 190px;
+  margin: 20px;
+  width: 270px;
+  height: 270px;
   backdrop-filter: blur(5px);
   background-color: rgba(253, 253, 96);
   border-radius: 29px;
@@ -296,7 +307,6 @@ body {
   justify-content: center;
   padding-top: 10%;
 }
-
 
 #addAssignment {
   width: 95px;
