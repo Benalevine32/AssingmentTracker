@@ -1,7 +1,7 @@
 <template>
     <div class="AssignmentBox">
         <div class="description">
-            {{ description }}
+           {{ description }}
         </div>
         <div class="diffTime">
             <div class="Difficulty">
@@ -9,10 +9,11 @@
                 <input type="text" :disabled="noEdit" v-model="diff">
             </div>
             <div class="dueDate">
-                    Due Date: {{ dueDate }}
+                    Due Date: {{ formattedDate }}
+                    
             </div>
             <div class = "className">
-                    Class : {{ className }}
+                    Class: {{ className }}
             </div>
         </div>
 
@@ -33,6 +34,7 @@ export default{
         difficulty: {required: true, type: Number},
         dueDate: {required: true, type: Date},
         className: {required: true, type: String},
+        assignment_id: {required: true, type: Number},
     },
     data(){
         return{
@@ -40,12 +42,14 @@ export default{
             desc: this.description,
             diff: this.difficulty,
             due: this.dueDate,
+            formattedDate: "",
         }
     },
     methods:{
         editAssignment(){
             if(this.noEdit){
                 this.noEdit = !this.noEdit;
+                document.getElementById("DueDate").type = "date";
             }
             else{
                 this.noEdit = !this.noEdit;
@@ -63,9 +67,21 @@ export default{
                 });
                 window.location.reload();
             }
+        },
+        toFriendlyFormat(date){
+            var formatted = "";
+            var mm, dd, yyyy;
+            yyyy = date[0] + date[1] + date[2] + date[3];
+            mm = date[5] + date[6];
+            dd = date[8] + date[9];
+            formatted = mm + "/" + dd + "/" + yyyy;
+            return formatted;
         }
 
     },
+    created(){
+        this.formattedDate = this.toFriendlyFormat(this.due)
+    }
 
 }
 </script>
@@ -82,29 +98,23 @@ box-shadow: 3px 15px 30px -1px rgba(0,0,0,0.57);
     width: 75%;
     height: 175px;
     display: flex;
+    flex-direction: column;
     margin-left: auto;
     margin-right: auto;
     background: #403D39;
     border-radius: 20px;
     
 }
-.Title{
-    position: relative;
-    width: 195px;
-    height: 40px;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 29px;
-    color: #E6E6E6;
-}
-.Description{
-    position: relative;
-    align-content: center;
+
+.description{
+    width: 100%;
+    margin-top: 3%;
     overflow-wrap: break-word;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
+    font-weight: 520;
+    font-size:18px;
     color: #E6E6E6;
+    display: flex;
+    justify-content: center;
 }
 .editbtn{
     background-image: url(https://www.svgrepo.com/show/505639/edit-4.svg);

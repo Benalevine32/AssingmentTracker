@@ -10,13 +10,13 @@
         <center>
           <input
             type="box"
-            placeholder="Email"
+            placeholder="    Email"
             id="usernameBox"
             v-model="userEmail"
           />
           <input
             type="box"
-            placeholder="Password"
+            placeholder="    Password"
             id="passwordBox"
             v-model="userPassword"
           />
@@ -105,7 +105,8 @@ html {
   align-items: center;
   text-align: center;
   min-height: 100vh;
-  background: #1f1e1e;
+  background: rgb(0,83,204);
+  background: linear-gradient(6deg, rgba(0,83,204,1) 0%, rgba(252,176,69,1) 100%);
 }
 
 #mainBox {
