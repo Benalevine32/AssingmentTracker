@@ -49,6 +49,7 @@
                 </div>
               </div>
             </div>
+            <button id="addAssignment" @click="showAdd()">+</button>
           </div>
         </center>
         <button id="addAssignment" @click="showAdd()">+</button>
@@ -144,17 +145,81 @@ export default {
     },
     showModal() {
       this.isModalVisible = true;
+
     },
-    closeModal() {
-      this.isModalVisible = false;
+    mounted()
+    {
+      const userId = localStorage.getItem('user_id')
+        axios.get(`http://localhost:3001/api/classes/${userId}`)
+        .then((response)=>{
+            this.classesList = response.data;
+        })    
+        .catch((error)=>{
+            console.error(error);
+        });
+        axios.get(`http://localhost:3001/api/top3Assignments/${userId}`)
+        .then((response)=>{
+            this.top3AssignmentsList = response.data;
+            console.log(`Top 3 assignments ${this.top3AssignmentsList}`)
+        })
+        .catch((error)=>{
+            console.error(error);
+        })
     },
-    toggleDiv() {
-      this.sidePanel = !this.sidePanel;
-      if (this.sidePanel) {
-        this.sidePanelButton = "X";
-      } else {
-        this.sidePanelButton = "Menu";
-      }
+    methods: {
+      showAdd(){
+        this.isAddVisible = true;
+      },
+      closeAdd(){
+        this.isAddVisible = false;
+      },
+      closeClass(){
+        this.isClassesVisible = false;
+      },
+      showSort(){
+        this.isSortVisible = true;
+      },
+      showClasses(){
+        this.isClassesVisible = true;
+      },
+      closeSort(){
+        this.isSortVisible = false;
+      },
+      showModal() {
+        this.isModalVisible = true;
+      },
+      closeModal() {
+        this.isModalVisible = false;
+      },
+      toggleDiv() {
+        this.sidePanel = !this.sidePanel;
+        if (this.sidePanel) {
+          this.sidePanelButton = "X";
+        } else {
+          this.sidePanelButton = "Menu";
+        }
+      },
+      logout() {
+        localStorage.clear()
+        this.$router.push('/')
+      },
+      updateSelection({ selectedClasses, selectedPriorities, options}) {
+        // Use selectedClasses and selectedPriorities here
+        this.top3AssignmentsList = []
+        const user_id = localStorage.getItem('user_id')
+        if (selectedClasses.length === options.length && selectedPriorities.length === 3){
+          axios.get(`http://localhost:3001/api/top3Assignments/${user_id}`)
+              .then((response)=>{
+                  this.top3AssignmentsList = response.data;
+              })
+              .catch((error)=>{
+                  console.error(error);
+              })
+        }
+        else if(selectedClasses.length != options.length && selectedPriorities.length === 3){
+          console.log("Bum");
+        }
+      },
     },
     logout() {
       localStorage.clear();
@@ -335,4 +400,5 @@ body {
   align-items: center;
 }
 </style>
+
 

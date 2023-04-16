@@ -60,6 +60,7 @@ export default{
                     userID: localStorage.getItem('user_id')
                 }
             });
+
             this.classes = response.data;
             for (let i = 0; i < this.classes.length; i++) {
             const assignmentCount = await this.fetchAssignmentCount(this.classes[i].class_id);
@@ -99,7 +100,8 @@ export default{
                     this.classes.push({
                         className: this.classNameVal,
                         classDescription: this.classDescriptionVal,
-                        user_id: userID
+                        user_id: userID,
+                        assignmentCount: 0
                         
                     });  
                     this.classDescriptionVal = "";
