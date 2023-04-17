@@ -1,9 +1,7 @@
   <template>
       <div class="sortPop">
           <div class="sortPop-inner">
-            <div class="exitButton">
-              <button @click="close">X</button>
-            </div>
+              <button class="exitButton" type="button" @click="close">X</button>
               <h1 id="SortHead"> Sort Tasks</h1>
               <div class="sortingMeths">
                   <div id="PrioList" class="PriorityDrop" tabindex="100" >
@@ -55,14 +53,18 @@
       };
     },
     mounted() {
-      axios.get('http://localhost:3001/api/classes')
-      .then((response)=>{
+      axios.get('http://localhost:3001/api/classes', {
+        params: {
+          userID: localStorage.getItem('user_id'),
+        },
+      })
+      .then((response) => {
         this.options = response.data;
         this.selectedClasses = this.options.map(option => option.className);
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.error(error);
-      })
+      });
     },
     methods: {
       togglePrioDropdown() {
@@ -131,33 +133,39 @@
     min-height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
     font-family: "Nunito", sans-serif;
-
   }
 
   .sortPop-inner{
     padding: 20px;
-    box-sizing: border-box;
     position: relative;
     background: #252422;
-    border: 1px solid #949090;
-    border-radius: 32px;
-    
+    position: fixed;
     margin: 0;
     flex-direction: column;
-    max-height: 35vh;
+    max-height: 30vh;
     max-width: 50vh;
   }
-  .exitButton{
-    text-align: right;
-  }
+  .exitButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #e6e6e6;
+    background: transparent;
+}
   #SortHead{
+    position: relative;
+    border-bottom: 1px solid #eeeeee;
+    color: #E6E6E6;
+    font-size: 25px;
+    padding: 15px;
     display: flex;
     justify-content: center;
-    justify-items: center;
-    align-content: center;
-    width: 100%;
-    border-bottom: 1px solid #eeeeee;
-    color: #e6e6e6;
+    align-items: center;
 
   }
   .sortingMeths {
@@ -165,12 +173,10 @@
     position: relative;
     justify-content: center;
     padding: 5px;
-    margin-right: 0%;
     color: #000000;
   }
 
   .PriorityDrop {
-    position: relative;
     align-items: center;
     margin: 10px;
     padding: 5px;

@@ -1,9 +1,7 @@
 <template>
     <div class="sortPop">
         <div class="sortPop-inner">
-            <div class="exitButton">
-                <button  @click="close">X</button>
-            </div>
+           <button class="exitButton" type="button" @click="close">X</button>
             <div class="Title">
                 <b>Add Assignment</b>
                 <p>{{ submissionMessage }}</p>
@@ -48,8 +46,8 @@
                       <option value="5">Very Hard</option>
                     </select>                
                   </div>
-                  <div class="IndInp">
-                      <button @click="submit">Submit</button>
+                  <div>
+                      <button type="button" class="SubmitBut" @click="submit">Submit</button>
                    </div>
             </div>
         </div>
@@ -75,8 +73,7 @@ import axios from 'axios';
     },
     mounted()
     {
-      axios
-      .get('http://localhost:3001/api/classes',{
+      axios.get('http://localhost:3001/api/classes',{
         params:{
           userID: localStorage.getItem('user_id'),
         }
@@ -124,44 +121,60 @@ import axios from 'axios';
 
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap");
+
 .sortPop{
+    z-index: 10; /* Set a high z-index value */
     position: fixed;
     top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    z-index: 99;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.3);
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
+    align-items: center;
+    font-family: "Nunito", sans-serif;
   }
 
   .sortPop-inner{
-    position: fixed;
-    background-color: rgb(49, 49, 49);
-    color: rgb(3, 0, 0);
-    padding: 16px;
+    position: relative;
     width: 60%;
-    height: 60%;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    color: white;
+    height: 65%;
+    background: #252422;
+    box-shadow: 2px 2px 20px 1px;
+    display: flex;
+    flex-direction: column;
   }
   .exitButton{
-    text-align: right;
-  }
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #e6e6e6;
+    background: transparent;
+    z-index: 1; /* Add this line */
+}
   .Title{
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 5%;
-    align-content: center;
-    font-size: 30px;
+    position: relative;
+    border-bottom: 1px solid #eeeeee;
+    color: #E6E6E6;
+    font-size: 25px;
+    padding: 55px;
+    margin-bottom: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
   }
   .IndInp label{
     text-align: left;
+    color:white;
+
   }
   .InputList {
     font-size: 20px;
@@ -206,5 +219,26 @@ import axios from 'axios';
   }
   .dropdown:hover .dropdown-content {
   display: block;
+}
+.SubmitBut{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Add this line to center the button horizontally */
+  width: fit-content;
+  display: flex;
+  width: 10%;
+  height: 25px;
+  margin-top: 5px;
+  font-family: "Nunito", sans-serif;
+  border: none;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 252, 242, 0.8);
+  border-radius: 29px;
+  box-shadow: -10px 10px 40px 0px rgba(0, 0, 0, 1),
+      inset 5px -5px 16px 0px rgb(138, 136, 131),
+      inset 0px 11px 28px 0px rgb(255, 252, 242, 1);
+
 }
 </style>

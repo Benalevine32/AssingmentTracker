@@ -177,6 +177,7 @@ export default {
 head,
 body {
   margin: 0;
+  overflow-y: hidden;
 }
 
 #img {
