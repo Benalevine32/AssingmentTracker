@@ -14,6 +14,7 @@
             :description="asmt.description"
             :difficulty="asmt.difficulty"
             :dueDate="asmt.dueDate"
+            :className="asmt.className"
           />
         </ul>
       </section>

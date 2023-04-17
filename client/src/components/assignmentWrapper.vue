@@ -9,7 +9,7 @@
                 <input type="text" :disabled="noEdit" v-model="diff">
             </div>
             <div class="dueDate">
-                    Due Date: {{ dueDate }}
+                    Due Date: {{ dueDate | formatDate }}
             </div>
             <div class = "className">
                     Class : {{ className }}
@@ -40,8 +40,15 @@ export default{
             desc: this.description,
             diff: this.difficulty,
             due: this.dueDate,
+            class: this.className
         }
     },
+    filters: {
+    formatDate(value) {
+      const date = new Date(value);
+      return date.toLocaleDateString();
+    },
+  },
     methods:{
         editAssignment(){
             if(this.noEdit){
