@@ -10,10 +10,10 @@
         <p id="errorMSG">{{ signUpMSG }}</p>
 
         <div id="registerBoxes">
-          <input type="text" v-model="userfirstName" placeholder="First Name" />
-          <input type="text" v-model="userlastName" placeholder="Last Name" />
-          <input type="text" v-model="useremail" placeholder="Email" />
-          <input type="text" v-model="userpassword" placeholder="Password" />
+          <input type="text" v-model="userfirstName" placeholder="    First Name" />
+          <input type="text" v-model="userlastName" placeholder="    Last Name" />
+          <input type="text" v-model="useremail" placeholder="    Email" />
+          <input type="text" v-model="userpassword" placeholder="    Password" />
           <button type="button" id="register" @click="register()">
             Register
           </button>
@@ -87,7 +87,8 @@ html {
   align-items: center;
   text-align: center;
   min-height: 100vh;
-  background: #1f1e1e;
+  background: rgb(0,83,204);
+  background: linear-gradient(6deg, rgba(0,83,204,1) 0%, rgba(252,176,69,1) 100%);
 }
 
 #mainBox {
