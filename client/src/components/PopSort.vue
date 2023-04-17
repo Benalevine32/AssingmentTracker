@@ -115,57 +115,69 @@
   </script>
 
   <style scoped>
+  @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap");
+
   .sortPop{
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 99;
-      background-color: rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: auto;
-      margin-right: auto;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    text-align: center;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-family: "Nunito", sans-serif;
+
   }
 
   .sortPop-inner{
-      position: fixed;
-      background-color:#403D39;
-      color: rgb(3, 0, 0);
-      padding: 16px;
-      width: 30%;
-      height: 30%;
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-      text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    background: #252422;
+    border: 1px solid #949090;
+    border-radius: 32px;
+    
+    margin: 0;
+    flex-direction: column;
+    max-height: 35vh;
+    max-width: 50vh;
   }
   .exitButton{
     text-align: right;
   }
   #SortHead{
-    color: rgb(255, 255, 255);
-    margin-left: auto;
-    margin-right: auto;
-    align-items: center;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    width: 100%;
+    border-bottom: 1px solid #eeeeee;
+    color: #e6e6e6;
+
   }
   .sortingMeths {
     display: flex;
     position: relative;
     justify-content: center;
-    left: 5px;
-    right: 5px;
     padding: 5px;
+    margin-right: 0%;
+    color: #000000;
   }
 
   .PriorityDrop {
     position: relative;
     align-items: center;
-    margin-left: 10px;
+    margin: 10px;
     padding: 5px;
     top: 100%;
+    width: 80%; 
+    
   }
-
   .PriorityDrop .anchor {
     position: relative;
     width: 60%;
@@ -175,7 +187,8 @@
     display: inline-block;
     padding: 5px 50px 5px 10px;
     border: 1px solid #000000;
-    background-color: rgb(202, 202, 202);
+    background-color: rgba(67, 135, 232, 1);
+    color:white;
   }
 
   .PriorityDrop .anchor:after {
@@ -201,13 +214,16 @@
   .PriorityDrop ul.PrioItems {
     position: static;
     top: 100%;
-    width: 100%;
+    width: 115%;
     list-style-type: none;
     margin: 0;
     padding: 0;
     align-items: center;
-    background-color: rgb(202, 202, 202);
+    background-color: rgba(67, 135, 232, 1);
     outline:1px solid black;
+    color:white;
+    max-height: 80%; 
+    width: auto;
   }
 
   .PriorityDrop .Scroll ul.PrioItems {

@@ -132,6 +132,7 @@ export default{
 </script>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap");
 
 .ClassManage{
     z-index: 10; /* Set a high z-index value */
@@ -144,6 +145,7 @@ export default{
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Nunito", sans-serif;
 }
 .ClassManage-inner{
     width: 30%;
