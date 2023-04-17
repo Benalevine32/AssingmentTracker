@@ -80,7 +80,7 @@ export default{
             this.showAddClass = !this.showAddClass;
         },
         AddClassFunction() {
-        var userID = 1;
+        var userID = localStorage.getItem('user_id');
             if (this.classDescriptionVal !== null && this.classNameVal !== null) {
                 axios.post("http://localhost:3001/api/insertClasses",
                     {
@@ -111,6 +111,7 @@ export default{
                 });
 
             }
+            window.location.reload();
         },
         handleClassDeleted(deletedClassId) {
             this.classes = this.classes.filter((classItem) => classItem.class_id !== deletedClassId);

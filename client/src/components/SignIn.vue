@@ -105,7 +105,7 @@ html {
   align-items: center;
   text-align: center;
   min-height: 100vh;
-  background: rgb(0,83,204);
+  background: rgb(0, 83, 204);
   background: linear-gradient(6deg, rgba(0,83,204,1) 0%, rgba(252,176,69,1) 100%);
 }
 
