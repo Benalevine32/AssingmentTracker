@@ -97,7 +97,7 @@ export default
       const pDueDate= this.dueDate;
       const pDifficulty= this.difficulty;
 
-      const queryURI = `http://localhost:3001/api/insertAssignment/${pAssignmentName}/${pSelectedClass}/${ pEstimatedTime}/${pDueDate}/${pDifficulty}/${user_id}`
+      const queryURI = `http://localhost:3001/api/insertAssignment/${pAssignmentName}/${pSelectedClass}/${pEstimatedTime}/${pDueDate}/${pDifficulty}/${user_id}`
       try
       {
          await fetch(queryURI)
@@ -111,6 +111,7 @@ export default
           this.estimatedTime = '';
           this.dueDate = '';
           this.difficulty = '';
+          window.location.reload();
     },
   },
 }
