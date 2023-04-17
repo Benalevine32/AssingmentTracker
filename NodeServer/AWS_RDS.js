@@ -96,7 +96,7 @@ app.get('/api/edit/:assId/:diff/:desc/:due', async (req, res) => {
 
 app.get('/api/edit/assignments/:userId', (req, res) => {
   const { userId } = req.params
-  const query = `SELECT * FROM assignments WHERE user_id="${userId}"`
+  const query = `SELECT assignments.*, classes.className as className from assignments join classes on assignments.class_id = classes.class_id WHERE assignments.user_id="${userId}"`
   connection.query(query, (error, results) => {
     if (error) {
       console.error('Error getting assignments: ', error);
