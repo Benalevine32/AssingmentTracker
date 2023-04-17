@@ -71,8 +71,8 @@ export default {
   align-items: center;
 }
 .modal {
-  width: 50%;
-  height: 50%;
+  width: 65%;
+  height: 75%;
   background: #252422;
   box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
@@ -84,9 +84,12 @@ export default {
   border-bottom: 1px solid #eeeeee;
   color: #e6e6e6;
   font-size: 25px;
+  font-weight: 600;
   justify-content: center;
   display: flex;
   padding: 50px;
+  font-family: Roboto;
+
 }
 .modal-body {
   position: relative;
