@@ -26,6 +26,90 @@ const connection = mysql.createConnection({
 })
 
 
+
+function SetPriorityPoints(ID)
+{
+  console.log(`WE ARE IN THE back end, Selected priorities: ${selectedPriorities}`)
+  // duedate -> ASCa
+    // difficulty, time -> DESC
+	if (selectedPriorities === ["Difficulty", "Due Date", "Time"])
+		{
+      // GET for "Difficulty", "Due Date", "Time"
+      priorityPoints = timePoints + datePoints + difficultyPoints;
+    }
+	else if (selectedPriorities === ["Difficulty", "Due Date"])
+		{
+      // GET for "Difficulty", "Due Date"
+      priorityPoints = datePoints + difficultyPoints;
+    }
+	else if (selectedPriorities === ["Difficulty", "Time"])
+		{
+            // GET for "Difficulty", "Time"
+      priorityPoints = datePoints + timePoints;
+    }
+	else if (selectedPriorities === ["Due Date", "Time"])
+		{
+      // GET for "Due Date", "Time"
+      priorityPoints = datePoints + timePoints;
+    }
+	else if (selectedPriorities === ["Difficulty"])
+		{
+      // priorityPoints = difficultyPoints;
+      app.get('/api/top3AssignmentsDifficulty', (req, res) => {
+        connection.query('SELECT * FROM assignments ORDER BY difficulty DESC', (error, results) => {
+          if (error) {
+            console.log("output that there was an error")
+            console.error('Error executing query Assignments:', error);
+            return res.status(500).json({ error: 'Database error' });
+          }
+          console.log();
+          res.json(results);
+        });
+      });
+    }
+	else if (selectedPriorities === ["Due Date"])
+		{
+      // priorityPoints = datePoints;
+      app.get('/api/top3AssignmentsDueDate', (req, res) => {
+        connection.query('SELECT * FROM assignments ORDER BY dueDate ASC', (error, results) => {
+          if (error) {
+            console.log("output that there was an error")
+            console.error('Error executing query Assignments by estimatedTime:', error);
+            return res.status(500).json({ error: 'Database error' });
+          }
+          res.json(results);
+        });
+      });
+    }
+	else if (selectedPriorities === ["Time"])
+		{
+      // priorityPoints = timePoints;
+      app.get('/api/top3AssignmentsTime', (req, res) => {
+        connection.query('SELECT * FROM assignments ORDER BY estimatedTime DESC', (error, results) => {
+          if (error) {
+            console.log("output that there was an error")
+            console.error('Error executing query Assignments by estimatedTime:', error);
+            return res.status(500).json({ error: 'Database error' });
+          }
+          res.json(results);
+        });
+      });
+    }
+}
+
+// priorityPoints = difficultyPoints;
+app.get('/api/top3AssignmentsDifficulty', (req, res) => {
+  connection.query('SELECT * FROM assignments ORDER BY difficulty DESC LIMIT 3', (error, results) => {
+    if (error) {
+      console.log("output that there was an error")
+      console.error('Error executing query Assignments:', error);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    console.log();
+    res.json(results);
+  });
+});
+
 connection.query("Select * from assignments",
 (error,results) => {
   if (error){
@@ -201,17 +285,39 @@ app.get('/api/edit/assignments/:userId', (req, res) => {
     });
   });
 
-app.get('/api/assignments', (req, res) => {
-    console.log("Made it past get request")
-    connection.query('SELECT * FROM assignments', (error, results) => {
-      if (error) {
-        console.log("output that there was an error")
-        console.error('Error executing query Assignments:', error);
-        return res.status(500).json({ error: 'Database error' });
-      }
-      res.json(results);
-    });
+  // Almight GET request -> used to sortby various priorities and classes selected by user
+  app.get('api/top3Assignments', async (req, res) => {
+    const { selectedClasses, selectedPriorities } = req.query;
+    const classIds = selectedClasses.split(',');
+    const sql = `
+      SELECT assignment_id, description, difficulty, dueDate
+      FROM assignments
+      WHERE class_id IN (${classIds.map(() => '?').join(',')})
+      ORDER BY
+        CASE WHEN 'Difficulty' IN (${selectedPriorities.map(() => '?').join(',')}) THEN difficulty END DESC,
+        CASE WHEN 'Due Date' IN (${selectedPriorities.map(() => '?').join(',')}) THEN dueDate END ASC
+        CASE WHEN 'Time' IN (${selectedPriorities.map(() => '?').join(',')}) THEN estimatedTime END ASC
+      LIMIT 3`;
+    const params = [...classIds, ...selectedPriorities, ...selectedPriorities];
+  
+    if (error) {
+      console.error('Error executing query top 3 Assignments:', error);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json(results);
   });
+
+// app.get('/api/assignments', (req, res) => {
+//     console.log("Made it past get request")
+//     connection.query('SELECT * FROM assignments', (error, results) => {
+//       if (error) {
+//         console.log("output that there was an error")
+//         console.error('Error executing query Assignments:', error);
+//         return res.status(500).json({ error: 'Database error' });
+//       }
+//       res.json(results);
+//     });
+//   });
   
   app.get('/api/numAssignments/:class_id', (req, res) => {
     console.log('Request received for NumAssignments endpoint');

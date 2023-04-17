@@ -64,6 +64,20 @@
       .catch((error)=>{
         console.error(error);
       })
+      // make the GET request when the component is mounted
+      axios.get('/api/top3Assignments', {
+        params: {
+          selectedClasses: this.selectedClasses.join(','),
+          selectedPriorities: this.selectedPriorities
+        }
+      })
+      .then(response => {
+        // set the assignments data from the response
+        this.assignments = response.data;
+      })
+      .catch(error => {
+        console.error('Error executing query top 3 Assignments:', error);
+      });
     },
     methods: {
       togglePrioDropdown() {
@@ -73,15 +87,21 @@
         this.showClassDropdown = !this.showClassDropdown;
       },
       close() {
+        console.log("POPSORT close");
         this.$emit("close");
+        console.log("Does it even reach here? *thinking emoji*")
+        console.log(`selectedClasses IN POP SORT BEFORE this.$emit: ${this.selectedClasses}`)
+        console.log(`selectedPriorities IN POP SORT BEFORE this.$emit: ${this.selectedPriorities}`)
         this.$emit("update-selection", {
           selectedClasses: this.selectedClasses,
           selectedPriorities: this.selectedPriorities,
           options: this.options
         });
+        console.log(`selectedClasses IN POP SORT: ${this.selectedClasses}`)
+        console.log(`selectedPriorities IN POP SORT: ${this.selectedPriorities}`)
+        console.log(`This is what is in selectedPriotieies: ${this.selectedPriorities}`);
       }
-      
-  },
+    },
     computed: {
       checkLengths() {
         return this.options.length === this.selectedClasses.length;
@@ -100,8 +120,11 @@
         
         this.selectedPriorities = ["Difficulty", "Due Date", "Time"];
         this.selectAllPrio = true; 
-      } else {
+      }
+      // else if {
         
+      // } 
+      else {
         this.selectedPriorities = [];
         this.selectAllPrio = false; 
       }

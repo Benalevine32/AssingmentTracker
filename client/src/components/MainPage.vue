@@ -10,7 +10,10 @@
   
         <div id="restOfScreen">
           <myModal v-show="isModalVisible" @close="closeModal()"/>
-          <PopSort   @update-selection="updateSelection" v-show="isSortVisible" @close="closeSort()"/>
+          <PopSort   
+            @update-selection="updateSelection" 
+            v-show="isSortVisible" 
+            @close="closeSort()"/> 
           <AddAssignPop v-show="isAddVisible" @close="closeAdd()" />
           <ClassManage v-show="isClassesVisible" @close="closeClass()"/>
           <button id="menu" v-on:click="toggleDiv()">
@@ -24,9 +27,9 @@
               id="taskRow1"
             >
               <div id="main-task-title">
-               <p>{{ item.description }}</p>
-               <p>{{ item.dueDate | formatDate }}</p>
-               <p>{{ item.difficulty }}</p>
+                <p>{{ item.description }}</p>
+                <p>{{ item.dueDate | formatDate }}</p>
+                <p>{{ item.difficulty }}</p>
   
               </div>
             </div>
@@ -63,7 +66,10 @@
         sidePanel: false,
         sidePanelButton: "Menu",
         classesList: [],
-        top3AssignmentsList: []
+        top3AssignmentsList: [],
+        hasDifficulty: false
+        // hasDueDate: false,
+        // hasTime: false,
       };
     },
     filters:{
@@ -128,22 +134,62 @@
         localStorage.clear()
         this.$router.push('/')
       },
-      updateSelection({ selectedClasses, selectedPriorities, options}) {
-        // Use selectedClasses and selectedPriorities here
-        this.top3AssignmentsList = []
-        const user_id = localStorage.getItem('user_id')
-        if (selectedClasses.length === options.length && selectedPriorities.length === 3){
-          axios.get(`http://localhost:3001/api/top3Assignments/${user_id}`)
-              .then((response)=>{
-                  this.top3AssignmentsList = response.data;
-              })
-              .catch((error)=>{
-                  console.error(error);
-              })
-        }
-        else if(selectedClasses.length != options.length && selectedPriorities.length === 3){
-          console.log("Bum");
-        }
+      async updateSelection({ selectedClasses, selectedPriorities, options}) {
+        // // Use selectedClasses and selectedPriorities here
+        // console.log("UPDATESELECTION")
+        // console.log(`CLASSES: ${selectedClasses}; PRIORITITES: ${selectedPriorities}`)
+        // console.log(options)
+        // this.selectedClasses = selectedClasses;
+        // this.selectedPriorities = selectedPriorities;
+        // this.top3AssignmentsList = [];
+        
+        console.log(options)
+        
+        console.log(`CLASSES: ${selectedClasses}; PRIORITIES: ${selectedPriorities}`)
+        const params = new URLSearchParams();
+        params.append('selectedClasses', selectedClasses.join(','));
+        params.append('selectedPriorities', selectedPriorities.join(','));
+
+        axios.get('http://localhost:3001/api/top3Assignments?' + params.toString())
+          .then(response => {
+            console.log(response.data);
+            this.top3AssignmentsList = response.data;
+          })
+          .catch(error => {
+            console.error(error);
+        });
+        
+
+        // // const user_id = localStorage.getItem('user_id')
+        // // if (selectedClasses.length === options.length && selectedPriorities.length === 3){
+        // //   console.log("selectedClasses.length === options.length && selectedPriorities.length === 3 so its pulling top 3 assignments i think");
+        // //   axios.get(`http://localhost:3001/api/top3Assignments/${user_id}`)
+        // //       .then((response)=>{
+        // //           this.top3AssignmentsList = response.data;
+        // //       })
+        // //       .catch((error)=>{
+        // //           console.error(error);
+        // //       })
+        // // }
+        // // else{
+        // //   console.log("we made it here");
+        // // }
+        // if(selectedClasses.includes("Difficulty")){
+        //   console.log("difficulty is selected");
+        //   // hasDifficulty = true;
+        // }
+        // // if(selectedClasses.includes("difficulty")){
+        // //   hasDifficulty = true;
+        // // }
+        // // if(selectedClasses.includes("difficulty")){
+        // //   hasDifficulty = true;
+        // // }
+
+
+        // else if(selectedClasses.length != options.length && selectedPriorities.length === 3){
+        //   console.log(`Afeter: ${this.top3AssignmentsList}`)
+        //   console.log("Bum");
+        // }
       },
     },
   };
