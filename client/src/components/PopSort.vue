@@ -193,7 +193,7 @@
     display: inline-block;
     padding: 5px 50px 5px 10px;
     border: 1px solid #000000;
-    background-color: rgba(67, 135, 232, 1);
+    background-color: rgb(165, 165, 165);
     color:white;
   }
 
@@ -220,16 +220,16 @@
   .PriorityDrop ul.PrioItems {
     position: static;
     top: 100%;
-    width: 115%;
+    width: 90%;
     list-style-type: none;
     margin: 0;
+    margin-left: 5%;
     padding: 0;
     align-items: center;
-    background-color: rgba(67, 135, 232, 1);
+    background-color: rgb(165, 165, 165);
     outline:1px solid black;
     color:white;
     max-height: 80%; 
-    width: auto;
   }
 
   .PriorityDrop .Scroll ul.PrioItems {

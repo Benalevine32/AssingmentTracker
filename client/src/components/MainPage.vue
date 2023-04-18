@@ -41,10 +41,10 @@
                 <div id="difficulty">
                   <radial-progress-bar
                     :diameter="150"
-                    :completed-steps="item.difficulty*20"
+                    :completed-steps="item.difficulty"
                     :total-steps="totalSteps"
                   >
-                    <p>{{ item.difficulty *20 }}% Difficulty</p>
+                    <p>{{ item.difficulty }}% Difficulty</p>
                   </radial-progress-bar>
                 </div>
                 
