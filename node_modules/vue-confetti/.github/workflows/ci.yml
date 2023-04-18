@@ -1,0 +1,8 @@
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
