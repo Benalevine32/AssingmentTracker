@@ -80,6 +80,7 @@ export default{
             this.showAddClass = !this.showAddClass;
         },
         AddClassFunction() {
+            location.reload();
         var userID = localStorage.getItem('user_id');
             if (this.classDescriptionVal !== null && this.classNameVal !== null) {
                 axios.post("http://localhost:3001/api/insertClasses",
