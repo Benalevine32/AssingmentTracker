@@ -15,7 +15,7 @@
             v-model="userEmail"
           />
           <input
-            type="box"
+            type="password"
             placeholder="    Password"
             id="passwordBox"
             v-model="userPassword"

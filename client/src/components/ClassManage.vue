@@ -5,22 +5,7 @@
                 <div class="class-header-container">
                     <div>Classes</div>
                 </div>
-                <div class="AddClassSection" v-show="showAddClass">
-                    <div class="AddInputs">
-                        <div class="ClassNum">
-                            <label for="Name">Class Num:</label><br>
-                            <input type="text" id="ClassIDInput" v-model="classNameVal">
-                        </div>
-                        <div class="ClassName">
-                            <label for="Name">Class Name:</label><br>
-                            <input type="text" id="ClassNameInput" v-model="classDescriptionVal">
-                        </div>
-                    </div>
-                    <div class="AddButtons">
-                        <button type="button" @click="AddClassFunction" class="AddClassEnter">Add Class</button>
-                        <button type="button" @click="AddClassShow" class="CancelAddClass">Cancel</button>
-                    </div>
-                </div>
+                
                 <button type="button" class="btn-close" @click="close">x</button>
             </header>
             <section class="Class-body">
@@ -29,7 +14,18 @@
             </ul>
             </section>
             <div class="button-container">
-                <button type="button" class="AddClass" @click="AddClassShow">Add Class</button>
+                <div class="AddClassSection">
+                    <div class="AddInputs">
+                        <div class="ClassNum">
+                            <input type="text" id="ClassIDInput" v-model="classNameVal" placeholder="Class Num">
+                        </div>
+                        <div class="ClassName">
+                            <input type="text" id="ClassNameInput" v-model="classDescriptionVal" placeholder="Class Name">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="AddClass" @click="AddClassFunction">Add Class</button>
+                
             </div>
         </div>
     </div>
@@ -47,7 +43,6 @@ export default{
     data() {
       return {
         classes: [],
-        showAddClass: false,
         classNameVal : '',
         classDescriptionVal : '',
         isDataLoaded: false // Add this line
@@ -81,8 +76,10 @@ export default{
         },
         AddClassFunction() {
             location.reload();
+            console.log(this.classNameVal);
+            console.log(this.classDescriptionVal);    
         var userID = localStorage.getItem('user_id');
-            if (this.classDescriptionVal !== null && this.classNameVal !== null) {
+            if (this.classNameVal.trim() !== '' && this.classDescriptionVal.trim() !== '') {
                 axios.post("http://localhost:3001/api/insertClasses",
                     {
                     className: this.classNameVal,
@@ -110,9 +107,12 @@ export default{
                 .catch((error) => {
                     console.error(error);
                 });
+                window.location.reload();
 
             }
-            window.location.reload();
+            else{
+                console.log("Did Not send");
+            }
         },
         handleClassDeleted(deletedClassId) {
             this.classes = this.classes.filter((classItem) => classItem.class_id !== deletedClassId);
@@ -133,6 +133,7 @@ export default{
 </script>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap");
 
 .ClassManage{
     z-index: 10; /* Set a high z-index value */
@@ -145,13 +146,13 @@ export default{
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Nunito", sans-serif;
 }
 .ClassManage-inner{
-    width: 30%;
-    height: 50%;
+    width: 40%;
+    height: 60%;
     background: #252422;
     box-shadow: 2px 2px 20px 1px;
-    overflow-x: auto;
     display: flex;
     flex-direction: column;
 }
@@ -181,10 +182,7 @@ export default{
 }
 
 .AddClassSection {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
+  padding: 3px;
   font-size: 15px;
   text-align: center;
 }
@@ -197,8 +195,10 @@ export default{
 .AddInputs {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   font-size: 15px;
+  margin: 10px;
+  justify-content: center;
 }
 .Class-body {
     position: relative;
@@ -252,6 +252,8 @@ export default{
     text-align: center;
     justify-content: center;
     font-size: 15px;
+    margin-bottom: 10px; /* Add this line */
+    
 }
 .AddButtons{
     margin-top: 10%;

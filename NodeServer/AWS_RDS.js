@@ -15,7 +15,11 @@ const connection = mysql.createConnection({
   port: 3306
 })
 
-
+app.get('/api/markComplete/:id', (req, res) => {
+  assId = req.params.id;
+  const query = `DELETE FROM assignments WHERE assignment_id="${assId}"`;
+  connection.query(query);
+})
 
 app.get('/api/allAssignmentsWithClass', (req, res) => {
   connection.query('SELECT assignments.*, classes.className as className from assignments join classes on assignments.class_id = classes.class_id', (error, results) => {

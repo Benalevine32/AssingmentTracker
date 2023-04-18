@@ -54,11 +54,9 @@ export default{
         editAssignment(){
             if(this.noEdit){
                 this.noEdit = !this.noEdit;
-                document.getElementById("DueDate").type = "date";
             }
             else{
                 this.noEdit = !this.noEdit;
-
                 var diff = this.diff;
                 var desc = this.desc;
                 var due = this.due;

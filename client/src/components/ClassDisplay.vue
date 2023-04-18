@@ -31,6 +31,7 @@ export default{
     
     methods:{
         DeleteClassAssignments(){
+            console.log(this.class_id);
             axios
             .delete(`http://localhost:3001/api/deleteAssignmentToClass/${this.class_id}`)
             .then((res) => {

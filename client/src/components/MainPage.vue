@@ -47,6 +47,8 @@
                     <p>{{ item.difficulty }}% Difficulty</p>
                   </radial-progress-bar>
                 </div>
+                
+                <markComplete :assId="item.assignment_id"></markComplete>
               </div>
             </div>
           </div>
@@ -66,12 +68,16 @@
 
 
 <script>
+
 import RadialProgressBar from "vue-radial-progress";
 import myModal from "./myModal.vue";
 import PopSort from "./PopSort.vue";
 import AddAssignPop from "./AddAssignPop.vue";
 import ClassManage from "./ClassManage.vue";
 import axios from "axios";
+import markComplete from './mark-complete.vue';
+
+
 export default {
   name: "MainPage",
   components: {
@@ -80,6 +86,7 @@ export default {
     AddAssignPop,
     ClassManage,
     RadialProgressBar,
+    markComplete,
   },
   data() {
     return {
@@ -124,6 +131,7 @@ export default {
       });
   },
   methods: {
+
     showAdd() {
       this.isAddVisible = true;
     },
@@ -167,6 +175,13 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap");
 
+#complete {
+  background: transparent;
+  border: none;
+  color: rgb(93, 250, 108);
+  cursor: pointer;
+}
+
 #taskArea {
   position: absolute;
   width: 100%;
@@ -177,6 +192,7 @@ export default {
 head,
 body {
   margin: 0;
+  overflow-y: hidden;
 }
 
 #img {
