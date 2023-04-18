@@ -90,6 +90,7 @@ import axios from 'axios';
       },
       async submit()
       {
+        location.reload();
         console.log("submitting form...");
       
         const pAssignmentName= this.assignmentName;
@@ -103,16 +104,15 @@ import axios from 'axios';
         try
         {
            await fetch(queryURI)
-        }
-        catch{
-          throw new Error('Failure with posting new assignment')
-        }
-            // this.submissionMessage='Submission Sucessful'
-            this.assignmentName = '';
+           this.assignmentName = '';
             this.selectedClass = '';
             this.estimatedTime = '';
             this.dueDate = '';
             this.difficulty = '';
+        }
+        catch{
+          throw new Error('Failure with posting new assignment')
+        }
       },
     },
   }
