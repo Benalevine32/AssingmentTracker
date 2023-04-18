@@ -75,6 +75,7 @@ export default{
             this.showAddClass = !this.showAddClass;
         },
         AddClassFunction() {
+            location.reload();
             console.log(this.classNameVal);
             console.log(this.classDescriptionVal);    
         var userID = localStorage.getItem('user_id');
