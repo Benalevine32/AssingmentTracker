@@ -23,7 +23,7 @@ import axios from 'axios';
 export default{
     name: "ClassDisplay",
     props:{
-        class_id: {required: true, type: String},
+        class_id: {required: true, type: Number},
         className: {required: true, type: String},
         classDescription: {required: true, type: String},
         AssignmentNum: {required: true},

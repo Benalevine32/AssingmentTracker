@@ -192,7 +192,7 @@ app.delete('/api/deleteAssignmentToClass/:class_id', (req, res) => {
 
 app.delete('/api/deleteClass/:class_id', (req, res) => {
   console.log('Request received for delete Class endpoint');
-  const class_id = req.body.class_id;
+  const class_id = req.params.class_id
   connection.query(
     'DELETE FROM classes WHERE class_id = ?',
     [class_id],

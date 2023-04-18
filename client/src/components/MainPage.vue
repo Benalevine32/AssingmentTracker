@@ -44,7 +44,7 @@
                     :completed-steps="item.difficulty"
                     :total-steps="totalSteps"
                   >
-                    <p>{{ item.difficulty }}% Difficulty</p>
+                    <p>{{ item.difficulty }}/6 Difficulty</p>
                   </radial-progress-bar>
                 </div>
                 
@@ -90,7 +90,7 @@ export default {
   },
   data() {
     return {
-      totalSteps: 100,
+      totalSteps: 6,
       isAddVisible: false,
       isSortVisible: false,
       isModalVisible: false,
