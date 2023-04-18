@@ -13,7 +13,7 @@
           <input type="text" v-model="userfirstName" placeholder="    First Name" />
           <input type="text" v-model="userlastName" placeholder="    Last Name" />
           <input type="text" v-model="useremail" placeholder="    Email" />
-          <input type="text" v-model="userpassword" placeholder="    Password" />
+          <input type="password" v-model="userpassword" placeholder="    Password" />
           <button type="button" id="register" @click="register()">
             Register
           </button>
