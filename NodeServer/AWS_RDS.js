@@ -14,6 +14,30 @@ const connection = mysql.createConnection({
   database: 'assignmentTracker',
   port: 3306
 })
+app.get('/api/updateAssignments', async (req, res) => {
+  connection.query("Select * from assignments",
+  (error,results) => {
+    if (error){
+      console.log("Error getting assignments")
+    }
+    for (let i = 0; i < results.length; i++){
+      setTime(results[i].assignment_id, results[i].estimatedTime)
+      setDate(results[i].dueDate)
+      setDifficulty(results[i].assignment_id, results[i].difficulty); 
+      connection.query( 'UPDATE assignments SET difficultyPoints = ' +difficultyPoints +', timePoints = ' +timePoints +', datePoints = ' +datePoints +' WHERE assignment_id = ' +results[i].assignment_id, 
+      (errorInner) => {
+        if(errorInner){
+          console.log(`Difficulty ${difficultyPoints}`)
+          console.log(`DueDate ${datePoints}`)
+          console.log(`Time ${timePoints}`)
+          console.log(`AssID ${results[i].assignment_id}`)
+          console.log("Error sending values")
+          console.log(errorInner)
+        }
+      })
+    }
+  });
+});
 
 app.get('/api/markComplete/:id', (req, res) => {
   assId = req.params.id;
@@ -248,7 +272,7 @@ app.get('/api/numAssignments/:class_id', (req, res) => {
 
 app.get('/api/top3Assignments', (req, res) => {
   const UserId = req.query.userID;
-  connection.query('SELECT * FROM assignments where user_id = ? ORDER BY difficulty DESC LIMIT 3', [UserId], (error, results) => {
+  connection.query('SELECT assignment_id, description, difficulty, dueDate, (timePoints + datePoints + difficultyPoints) AS total_points FROM assignments WHERE user_id = ? ORDER BY total_points DESC LIMIT 3', [UserId], (error, results) => {
     if (error) {
       console.error('Error executing query Assignments:', error);
       return res.status(500).json({ error: 'Database error' });
@@ -309,3 +333,82 @@ app.get('/api/insertAssignment/:pAssignmentName/:pSelectedClass/:pEstimatedTime/
     console.log('Assignments added successfully');
   });
 });
+function setTime(ID, value)
+{
+time = value
+timePoints = 1
+	if (time < 1)
+		{
+			timePoints = 1
+		}
+	else if (time <= 30)
+		{
+			timePoints = 1;
+		}
+	else if (time <= 60)
+		{
+			timePoints = 2;
+		}
+	else if (time <= 90)
+		{
+			timePoints = 3;
+		}
+	else if (time <= 120)
+		{
+			timePoints = 4;
+		}
+	else if (time <= 150)
+		{
+			timePoints = 5;
+		}
+	else if (time <= 180)
+		{
+			timePoints = 6;
+		}
+	else if (time <= 210)
+		{
+			timePoints = 7;
+		}
+	else if (time <= 240)
+		{
+			timePoints = 8;
+		}
+	else if (time <= 270)
+		{
+			timePoints = 9;
+		}
+	else
+		{
+			timePoints = 10;
+		}
+  
+}
+
+function setDate(dueDate) {
+  console.log(dueDate)
+  const currDate = new Date();
+  const dueDateObj = new Date(dueDate);
+  console.log(currDate)
+  console.log(dueDateObj)
+
+  const difference =  dueDateObj.getTime() -currDate.getTime();
+  const days = Math.ceil(difference / (1000 * 3600 * 24));
+  console.log(days);
+
+  if (days <= 1) {
+    datePoints = 5;
+  } else if (days <= 3) {
+    datePoints = 4; 
+  } else if (days <= 6) {
+    datePoints = 3;
+  } else if (days <= 10) {
+    datePoints = 2;
+  } else {
+    datePoints = 1;
+  }
+}
+
+function setDifficulty(ID, value)
+{
+  difficultyPoints = value
+}

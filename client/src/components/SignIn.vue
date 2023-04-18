@@ -34,6 +34,7 @@
 </template>
   
 <script scoped>
+import axios from 'axios';
 export default {
   name: "signIn",
   data() {
@@ -48,6 +49,7 @@ export default {
     };
   },
   created() {
+    axios.get("http://localhost:3001/api/updateAssignments")    
     localStorage.clear();
   },
   methods: {
