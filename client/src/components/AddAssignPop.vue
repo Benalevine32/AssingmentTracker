@@ -39,11 +39,11 @@
                 <div class="IndInp">
                     <label for="Difficulty">Difficulty:</label><br>
                     <select name="cars" id="cars" v-model="difficulty">
-                      <option value="1">Very Easy</option>
-                      <option value="2">Easy</option>
-                      <option value="3">Medium</option>
-                      <option value="4">Hard</option>
-                      <option value="5">Very Hard</option>
+                      <option value="20">Very Easy</option>
+                      <option value="40">Easy</option>
+                      <option value="60">Medium</option>
+                      <option value="80">Hard</option>
+                      <option value="100">Very Hard</option>
                     </select>                
                   </div>
                   <div>
