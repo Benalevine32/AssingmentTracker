@@ -69,6 +69,7 @@ export default{
     },
     methods: {
         close() {
+            window.location.reload();
             this.$emit("close");
         },
         AddClassShow(){
